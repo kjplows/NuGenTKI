@@ -1,66 +1,33 @@
-export             GFSa9nuCH="list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCH.list"
-#"list/GENIEOOB_BeamNubar_EnuMINERvA_TargetCH.list"
-#"list/GENIEOOB_BeamNu_EnuMINERvA_TargetCH.list"
-#"list/GENIEOOB_BeamNu_EnuT2K_TargetCH.list"
-#"list/GENIEISO_BeamNu_EnuMINERvA_TargetCH.list"
-#
+export GFSa9nuCH="list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCH.list"
+export GFSPIZEROa7nuCH=${GFSa9nuCH}
 
-export       LOWRECOILa1nuCH=${GFSa9nuCH}
+export LOWRECOILa1nuCH=${GFSa9nuCH}
 
 export LOWRECOILa1nubarCH=
-#"list/GENIEISO_BeamNubar_EnuMINERvA_TargetCH.list"
-#"list/GENIEOOB_BeamNubar_EnuMINERvA_TargetCH.list"
 
-export  NUBAR1PIa2nubarCH=${LOWRECOILa1nubarCH}
+export NUBAR1PIa2nubarCH=${LOWRECOILa1nubarCH}
 
 export CLRa5nuCH=
-#"list/GENIEISO_BeamNu_EnuMINERvA_TargetCH.list"
-#"list/GENIEISO_BeamNu_Enu3000_TargetCH.list"
-#
+
 export RESPSa6nuCH=
-#"list/GENIEISO_BeamNu_EnuMINERvA_TargetCH.list"
 
 export GFSEXPa3nuCH=
-#"list/GENIEOOB_BeamNu_EnuT2K_TargetCH.list"
 
-export          MMECCQEnuCH=
-#"list/GENIEOOB_BeamNu_EnuMME_TargetCH.list"
-
-export GFSPIZEROa7nuCH="list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCH.list"
-#"list/Filelist_singleTest_dcGENIE2LFGHN_BeamNu_EnuMINERvA_TargetCH.list"
-#Filelist_dcGENIE2LFGHN_BeamNu_EnuMINERvA_TargetCH.list"
-#Filelist_GENIE2LFGHN_${aaa}_BeamNu_EnuMINERvA_TargetCH.list"
-#"list/GENIEOOB_BeamNu_EnuMINERvA_TargetCH.list"
+export MMECCQEnuCH=
 
 export NUGASa8nubar=
-#"list/GENIEOOB_BeamNubar_EnuDUNE_TargetHydrogen.list"
-#"list/GENIEOOB_BeamNubar_Enu24000800_TargetP50.list"
 
 ntostop=
 #10000000
 
 tag=MINERvAGENIEOOB_cleanCodetest_
 #MINERvAGENIEOOB_LE_
-#MINERvA${aaa}GENIEPIZERO
-#DUNEGENIEOOB${ntostop}
-#24000800GENIEOOBP50HONLY${ntostop}
-#MINERvAGENIEOOB
-#MINERvAMEGENIEOOB
-#MINERvAGENIEOOB
-#GENIEOOBT2K
-#
-#MINERvAGENIEISOiniAngle
-#2Boost
-#3GeVGENIEISOCLRfull
-#3GeVGENIEISOw2onsignKNsrc${ntostop}
-#3GeVGENIEISOw2onsign${ntostop}
-#MINERvAGENIEISOw2
-#MINERvAGENIEOOB
-#MINERvAGENIEISO
 
 ####################################
 
-mkexe.sh anaGenerator
+mkexe.sh anaGenerator -I../include
+
+exit
 
 #GFS 7 : PIZERO
 opt=${tag}GFSPIZEROa7nuCH;    nohup ./doAna.sh $GFSPIZEROa7nuCH    ${opt} 7 ${ntostop} > see${opt}.log &
