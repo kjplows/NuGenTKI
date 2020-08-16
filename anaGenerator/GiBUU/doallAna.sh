@@ -39,7 +39,7 @@ tag=MINERvAGiBUU_LE_
 
 mkexe.sh anaGenerator -I${NUGENTKI}/include
 
-exit
+#exit
 
 #GFS 7
 #opt=${tag}GFSPIZEROa7nuH;        nohup ./doAna.sh $GFSPIZEROa7nuH        ${opt} 7 ${nfile} > see${opt}.log &
