@@ -1,4 +1,6 @@
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/style
-export PATH=$PATH:$(pwd)/bin
+export NUGENTKI=$(pwd)
+export LOCALBIN=${NUGENTKI}/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NUGENTKI}/style
+export PATH=$PATH:${LOCALBIN}
 
 
