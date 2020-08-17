@@ -1,5 +1,8 @@
 void getStack(const TString fin, const TString anaid, const TString tag, const TString var)
 {
+  const TString dir= ("outStack/"+anaid);
+  gSystem->Exec("mkdir -p "+dir);
+
   cout<<" fin "<<fin<<" anaid "<<anaid<<" tag "<<tag<<" var "<<var<<endl;
   TFile::Open(fin);
 
@@ -108,7 +111,7 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
     cc->Print(Form("outStack/%s/%s_%s.png", anaid.Data(), var.Data(), tag.Data()));
   }
 
-  TFile *fout=new TFile(Form("outStack/%s/%s_%s.root", anaid.Data(), var.Data(), tag.Data()),"recreate");
+  TFile *fout=new TFile(Form("%s/%s_%s.root", dir.Data(), var.Data(), tag.Data()),"recreate");
   TDirectory *ld=gDirectory->mkdir(tag);
   ld->cd();
   lout->Write();

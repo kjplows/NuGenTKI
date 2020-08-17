@@ -1,7 +1,6 @@
 dir0=$(pwd)
 
-for anaid in GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly 
-#GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly
+for anaid in GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly 
 
 do
 
@@ -9,11 +8,9 @@ echo
 echo "===============================================================" $anaid
 cd $dir0
 
-mkdir outStack/${anaid} -p
-ls outStack/${anaid}
-echo
-echo
+#directory will be made in getStack.C
 
+nfile=0
 for locdir in ${anaid}{,nu{,bar}}
 do
     echo locdir $locdir
@@ -25,6 +22,8 @@ do
         continue
     fi
 
+    nfile=$( expr $nfile + 1 )
+        
     ls $fin
     echo
     tag=$(basename $fin | awk -F\. '{print $1}')
@@ -75,9 +74,14 @@ T dpTT20s dpTT10s dpTT5s dpTT2s "
     done
 done
 
-cd outStack/${anaid}
-ls *.root
-hadd ${anaid}.root *.root > seemerge.log
+echo nfile $nfile
+
+if [ $nfile != 0 ]
+then
+    cd outStack/${anaid}
+    ls *.root
+    hadd ${anaid}.root *.root > seemerge.log
+fi
 
 done
 
