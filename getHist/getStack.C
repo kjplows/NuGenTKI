@@ -63,7 +63,7 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
     */
 
     TH1D *hh[]={   hall,  hqe_0pi,  hqe_1pi,  hqe_Mpi,  hres_0pi,  hres_1pi,  hres_Mpi,  hdis_0pi,  hdis_1pi,  hdis_Mpi,  h2p2h_0pi,  h2p2h_1pi,  h2p2h_Mpi};
-    TString tit[]={"all", "QE 0#pi", "QE 1#pi^{0}", "QE multi-#pi^{0}", "RES 0#pi", "RES 1#pi^{0}", "RES multi-#pi^{0}", "DIS 0#pi", "DIS 1#pi^{0}", "DIS multi-#pi^{0}", "2p2h 0#pi", "2p2h 1#pi^{0}", "2p2h multi-#pi^{0}"};
+    TString tit[]={"all", "QE", "QE 1#pi^{0}", "QE multi-#pi^{0}", "RES", "RES 1#pi^{0}", "RES multi-#pi^{0}", "DIS", "DIS 1#pi^{0}", "DIS multi-#pi^{0}", "2p2h", "2p2h 1#pi^{0}", "2p2h multi-#pi^{0}"};
     const Int_t cols[]={kBlack, kRed-3,  kGray, kMagenta, kOrange, kBlue, kGreen+3, kRed-3,  kGray, kMagenta, kOrange, kBlue, kGreen+3};
 
     THStack * stk = new THStack(var,tag); lout->Add(stk);
