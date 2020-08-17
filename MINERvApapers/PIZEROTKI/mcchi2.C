@@ -125,7 +125,6 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     filetag.push_back("data/nuisance/allnuisance/nuwro_CCnumi_CH_GFG_noFSI_"+pi0v);
     filetag.push_back("data/nuisance/allnuisance/nuwro_CCnumi_CH_GFG_"+pi0v);
     filetag.push_back("data/NuWro_JS/xianguo_august2020_effSF");
-    //filetag.push_back("data/GENIE/v306OOB/GFSPIZEROMINERvAOOBGENIE");
 
     //const TString tmpg = "NuWro ";
     //leghead="";
@@ -143,12 +142,10 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     else{
       histnameNuWro = "dpTT";
     }
-    //histnameGENIE = filetag[3](filetag[3].Last('/')+1, 1000)+"nu/"+varname[ivar];
     
     legtag.push_back(tmpg+"RFG w/o FSI");
     legtag.push_back(tmpg+"RFG w/ FSI");
     legtag.push_back(tmpg+"ESF w/ FSI");
-    //legtag.push_back("GENIE OOB w/ FSI");
   }
   else if(sgen=="nuisancenuwro"){
     const bool kmix = 0;
