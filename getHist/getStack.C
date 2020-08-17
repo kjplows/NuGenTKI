@@ -1,6 +1,6 @@
-void getStack(const TString fin, const TString anaid, const TString tag, const TString var, const TString nuwrovar)
+void getStack(const TString fin, const TString anaid, const TString tag, const TString var)
 {
-  cout<<" fin "<<fin<<" anaid "<<anaid<<" tag "<<tag<<" var "<<var<<" nuwrovar "<<nuwrovar<<endl;
+  cout<<" fin "<<fin<<" anaid "<<anaid<<" tag "<<tag<<" var "<<var<<endl;
   TFile::Open(fin);
 
   TList *lout=new TList;
@@ -25,12 +25,11 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
     cc->Print(Form("outStack/%s/%s_%s.png", anaid.Data(), var.Data(), tag.Data()));
   }
   else{
-    bool kNuWro=kFALSE;
-    TH1D * hall=(TH1D*) gDirectory->Get(var+"_all");   if(!hall)  {hall=(TH1D*)  gDirectory->Get(nuwrovar); kNuWro = kTRUE;}; if(!hall)  hall=(TH1D*)  gDirectory->Get(nuwrovar+"piN");     if(!hall)  hall=(TH1D*)  gDirectory->Get(nuwrovar+"Npion");
-    TH1D * hqe=(TH1D*) gDirectory->Get(var+"_qe");     if(!hqe)   hqe=(TH1D*)   gDirectory->Get(nuwrovar+"_qel");                if(!hqe)   hqe=(TH1D*)   gDirectory->Get(nuwrovar+"piN_qel"); if(!hqe)   hqe=(TH1D*)   gDirectory->Get(nuwrovar+"Npion_qel");
-    TH1D * hres=(TH1D*) gDirectory->Get(var+"_res");   if(!hres)  hres=(TH1D*)  gDirectory->Get(nuwrovar+"_res");                if(!hres)  hres=(TH1D*)  gDirectory->Get(nuwrovar+"piN_res"); if(!hres)  hres=(TH1D*)  gDirectory->Get(nuwrovar+"Npion_res");
-    TH1D * hdis=(TH1D*) gDirectory->Get(var+"_dis");   if(!hdis)  hdis=(TH1D*)  gDirectory->Get(nuwrovar+"_dis");                if(!hdis)  hdis=(TH1D*)  gDirectory->Get(nuwrovar+"piN_dis"); if(!hdis)  hdis=(TH1D*)  gDirectory->Get(nuwrovar+"Npion_dis");
-    TH1D * h2p2h=(TH1D*) gDirectory->Get(var+"_2p2h"); if(!h2p2h) h2p2h=(TH1D*) gDirectory->Get(nuwrovar+"_mec");                if(!h2p2h) h2p2h=(TH1D*) gDirectory->Get(nuwrovar+"piN_mec"); if(!h2p2h) h2p2h=(TH1D*) gDirectory->Get(nuwrovar+"Npion_mec");
+    TH1D * hall=(TH1D*) gDirectory->Get(var+"_all");   
+    TH1D * hqe=(TH1D*) gDirectory->Get(var+"_qe");     
+    TH1D * hres=(TH1D*) gDirectory->Get(var+"_res");   
+    TH1D * hdis=(TH1D*) gDirectory->Get(var+"_dis");   
+    TH1D * h2p2h=(TH1D*) gDirectory->Get(var+"_2p2h"); 
     TH1D * hother=(TH1D*) gDirectory->Get(var+"_other"); 
     if(hother){
       if(hother->GetEntries()){
@@ -40,8 +39,6 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
         cout<<hother->GetName()<<" good "<<hother->GetEntries()<<endl;
       }
     }
-
-    cout<<"test11"<<endl;
 
     TH1D * hqe_0pi=(TH1D*) gDirectory->Get(var+"_qe_0pi");
     TH1D * hqe_1pi=(TH1D*) gDirectory->Get(var+"_qe_1pi");
@@ -75,19 +72,8 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
     for(int ii=0; ii<nh; ii++){
       
       //scale for CH target!
-      if(!kNuWro){
-        //only do it with GiBUU
-        //printf("no scaling for GENIE!!\n");
-        //test 
-        //hh[ii]->Scale(1./12.); printf("Scaling to per nucleon in C,  C should have been full nucleus and combined !!\n");
-        //test should use 
-        hh[ii]->Scale(1./13.); printf("Scaling to per nucleon in CH,  C and H should have been full nucleus and combined !!\n");
-      }
-      /*
-        else{
-        hh[ii]->Scale(12./13.); printf("Scaling NuWro to per nucleon in CH,  C and H should have been full nucleus and combined !!\n");  
-        }
-      */
+      //hh[ii]->Scale(1./12.); printf("Scaling to per nucleon in C,  C should have been full nucleus and combined !!\n");
+      hh[ii]->Scale(1./13.); printf("Scaling to per nucleon in CH,  C and H should have been full nucleus and combined !!\n");
       
       lout->Add(hh[ii]);
       //hh[ii]->SetLineWidth(0.5);
