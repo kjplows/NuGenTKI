@@ -33,7 +33,7 @@ void getStack(const TString fin, const TString anaid, const TString tag, const T
     TH1D * hother=(TH1D*) gDirectory->Get(var+"_other"); 
     if(hother){
       if(hother->GetEntries()){
-        printf("\n\n\n\n\n%s has entry!\n\n\n\n\n\n", hother->GetName()); exit(1);
+        printf("\n\n\n\n\n%s has entry! Is it COH?? \n\n\n\n\n\n", hother->GetName()); exit(1);
       }
       else{
         cout<<hother->GetName()<<" good "<<hother->GetEntries()<<endl;
