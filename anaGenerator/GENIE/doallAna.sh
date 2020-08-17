@@ -29,13 +29,13 @@ mkexe.sh anaGenerator -I${NUGENTKI}/include
 
 #exit
 
-#GFS 7 : PIZERO
-opt=${tag}GFSPIZEROa7nuCH;    nohup ./doAna.sh $GFSPIZEROa7nuCH    ${opt} 7 ${ntostop} > see${opt}.log &
-
-#exit
-
 #GFS 9 : 0PI
 opt=${tag}GFSa9nuCH;          nohup ./doAna.sh $GFSa9nuCH          ${opt} 9 ${ntostop} > see${opt}.log &
+
+exit
+
+#GFS 7 : PIZERO
+opt=${tag}GFSPIZEROa7nuCH;    nohup ./doAna.sh $GFSPIZEROa7nuCH    ${opt} 7 ${ntostop} > see${opt}.log &
 
 exit
 

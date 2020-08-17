@@ -23,6 +23,7 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
   ReadGENIE::SetChain(ch);
 
   int ientry = 0;
+  int nIMDskipped = 0;
   while(ch->GetEntry(ientry)){
     if(ientry%100000==0){
       printf("myEntries %d\n", ientry);
@@ -54,6 +55,14 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
 
     const double tmpenu = StdHepP4[0][3];
     hCCrate->Fill(tmpenu);
+
+    if(ecode.Contains("IMD")){//skip IMD
+      //nu:14;tgt:1000060120;proc:Weak[CC],IMD
+      //IMD pdg: 14, 1000060120, 11, 1000060120, 13, 12
+      //status: 0, 0, 0, 1, 1, 1
+      nIMDskipped++;
+      continue;
+    }
 
     const int tmpevent = EvtNum;
     const int tmpprod= abs(G2NeutEvtCode);
@@ -110,7 +119,7 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
     AnaUtils::DoFill(tout);
   }//loop over event
 
-  cout<<"All entries "<<ientry<<endl;
+  cout<<"All entries "<<ientry<<" nIMDskipped "<<nIMDskipped<<endl;
 }
 
 int GiBUUReadFile(const TString filelist, TTree * tout, const int nFileToStop)

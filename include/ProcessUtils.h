@@ -485,8 +485,7 @@ void ProceedMINERvAGFS0PI()
   }
   else if(lineIsBkgParticle){//all mesons https://gibuu.hepforge.org/trac/wiki/ParticleIDs                                                                                                                                                                           
     if(globalMuonCharge == -999){
-      //printf("globalMuonCharge not set before others! %d %d npar %d event %d\n", linePID, globalMuonCharge, npar, event); exit(1);
-      printf("globalMuonCharge not set before others! %d %d npar %d\n", linePID, globalMuonCharge, npar); exit(1);
+      printf("globalMuonCharge not set before others! %d %d npar %d lineRawID %d event %d\n", linePID, globalMuonCharge, npar, lineRawID, event); exit(1);
     }
     AddABit(totparcount, BKGBIT);
     AddABit(npar, BKGBIT);
