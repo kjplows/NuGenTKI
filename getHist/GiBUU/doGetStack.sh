@@ -1,4 +1,5 @@
-anaid=GFSPIZEROMINERvAGiBUULE_CarbonOnly
+anaid=GFS0PIMINERvAGiBUULE_CarbonOnly
+#GFSPIZEROMINERvAGiBUULE_CarbonOnly
 
 mkdir outStack/${anaid} -p
 ls outStack/${anaid}
@@ -24,7 +25,7 @@ do
 
     commonVar="muonmomentum muontheta enu Q2 xBj xrest Wtrue Wrest "
 
-    if [  $anaid == GFS0PIMINERvAGiBUUPiCut2Fixed -o $anaid == GFS0PIMINERvAGiBUUNOFSIPiCut2Fixed  -o $anaid == GFS0PIMINERvAGiBUURepCleanCodeSubNpiCarbonOnly ]
+    if [  $anaid == GFS0PIMINERvAGiBUUPiCut2Fixed -o $anaid == GFS0PIMINERvAGiBUUNOFSIPiCut2Fixed  -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly ]
     then
         varray=${commonVar}"dphit protonmomentum protontheta dalphat dpt neutronmomentum"
 
