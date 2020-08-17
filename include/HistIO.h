@@ -1,6 +1,8 @@
 #ifndef __HISTIO_H__
 #define __HISTIO_H__
 
+#include "TreeIO.h"
+
 #define CC0piNpID 1
 #define CC1piNpID 2
 #define CCMpiNpID 4
@@ -15,138 +17,171 @@ using namespace std;
 
 namespace HistIO
 {
-  //================================================= control ================================================= 
-  const bool OPENLR = false;
-  //true;
+  //============================================ variables and histograms ===================================== 
+  double perweight, enu;
+  int targetZ, evtMode, npar;
 
-  //================================================= variables ================================================= 
-  int npar, evtMode, targetZ; //prod;      
-  double perweight;
+  TH1D * henu  = 0x0;
 
-  double Q2, xBj, xrest, Wtrue, Wrest;
-  //, energyCCH, xCCH;
+#if __OPENCALC__ 
+  double muonmomentum, muontheta;
+  double Wtrue, Wrest, xBj, xrest, Q2;
+  double protonmomentum, protontheta, pionmomentum, piontheta, pionEk, baryonmomentum, baryontheta, baryonmass;
+  double dpt, dphit, dalphat,  neutronmomentum,  dpTT;
+#endif
+  TH1D * hmuonmomentum = 0x0, * hmuontheta = 0x0;
+  TH1D * hWtrue = 0x0, * hWrest = 0x0, * hxBj = 0x0, * hxrest = 0x0, * hQ2 = 0x0;
+  TH1D * hprotonmomentum = 0x0,* hprotontheta = 0x0, * hpionmomentum = 0x0, * hpiontheta = 0x0, * hpionEk =0x0, * hbaryonmomentum=0x0, * hbaryontheta=0x0, * hbaryonmass=0x0;
+  TH1D * hdpt = 0x0, * hdphit = 0x0, * hdalphat = 0x0, * hneutronmomentum = 0x0, * hdpTT = 0x0;
 
-  double muonmomentum, muontheta, enu;
-  
-  double RESmass, adlerPhi, lrsign, w2, KNsrc;
-  //pseudoPhi, pseudosign, wpseudo2, 
+#if __OPENCLR__
+  double RESmass, adlerPhi, lrsign, w2;
+  double pseudoPhi, pseudosign, wpseudo2;
+  double CLR_KNsrc;
+#endif
+  TH1D * hRESmass = 0x0, * hadlerPhi = 0x0, * hlrsign = 0x0, * hw2 = 0x0;
+  TH1D * hoobphi = 0x0;
+  //TH1D * hpseudoPhi = 0x0, * hpseudosign = 0x0, * hwpseudo2 = 0x0;
+  TH1D * hCLR_KNsrc = 0x0;
 
-  double protonmomentum, protontheta, pionmomentum, pionEk,  piontheta, baryonmomentum, baryontheta, baryonmass, dalphat, dphit, dpt, /*protonTT, pionTT, */ dpTT, dpTT2s, dpTT5s,dpTT10s,dpTT20s, /*dpTy, */ neutronmomentum;
-
-  //================================================= histograms ================================================= 
-  TH1D * hQ2 = 0x0;
-  TH1D * hxBj = 0x0;
-  TH1D * hxrest = 0x0;
-  TH1D * hWtrue = 0x0;
-  TH1D * hWrest = 0x0;
-  TH1D * hmuonmomentum = 0x0, * hmuontheta = 0x0, * henu  = 0x0;
-
-  TH1D * hRESmass = 0x0, * hadlerPhi = 0x0, * hoobphi = 0x0, * hlrsign = 0x0, * hw2 = 0x0, * hKNsrc = 0x0;
-  //* hpseudoPhi = 0x0, * hpseudosign = 0x0, * hwpseudo2 = 0x0, 
-
-  TH1D * hprotonmomentum = 0x0;
-  TH1D * hprotontheta = 0x0;
-  TH1D * hpionmomentum = 0x0;
-  TH1D * hpionEk =0x0;
-  TH1D * hpiontheta = 0x0;
-  TH1D * hbaryonmomentum=0x0, * hbaryontheta=0x0, * hbaryonmass=0x0;
-  TH1D * hdalphat = 0x0, * hdphit = 0x0, * hdpt = 0x0, * hneutronmomentum = 0x0, * hprotonTT = 0x0, * hpionTT = 0x0, * hdpTT = 0x0, * hdpTT20s = 0x0, * hdpTT10s = 0x0, * hdpTT5s = 0x0, * hdpTT2s = 0x0, * hdpTy = 0x0, * hlrdpt = 0x0, * hlrdpTT = 0x0, * hKNdpt = 0x0, * hsumdpt = 0x0;
+#if __OPENDPTT__ 
+  double dpTT2s, dpTT5s,dpTT10s,dpTT20s;
+#endif
+  TH1D * hdpTT20s = 0x0, * hdpTT10s = 0x0, * hdpTT5s = 0x0, * hdpTT2s = 0x0;
+  TH1D * hprotonTT = 0x0, * hpionTT = 0x0, * hdpTy = 0x0, * hlrdpt = 0x0, * hlrdpTT = 0x0, * hKNdpt = 0x0, * hsumdpt = 0x0;
   //* hpseudodpt = 0x0, 
 
+#if __OPENMMECCQE__
+#endif
   TH1D * hq3 = 0x0, * hq2qe = 0x0, * hmuonpt=0x0, * hmupz=0x0;
-  TH2D  * hq3VSEav = 0x0, * hq3VSneutronmomentum = 0x0, *hmuonptVSmupz=0x0, *hmupzVSmuonpt=0x0;
+  TH2D * hq3VSEav = 0x0, * hq3VSneutronmomentum = 0x0, *hmuonptVSmupz=0x0, *hmupzVSmuonpt=0x0;
   TH3D * hErecoilTIMES1E3VSmupzVSmuonpt = 0x0;
 
 //=============================================================================================================================
 //                                                          Functions
 //=============================================================================================================================
 
+void SetTree(TTree * tree, const int anaid)
+{
+  tree->SetBranchAddress("perweight", &perweight); 
+  tree->SetBranchAddress("targetZ", &targetZ);
+  tree->SetBranchAddress("enu", &enu);    
+  tree->SetBranchAddress("evtMode", &evtMode);
+  tree->SetBranchAddress("npar", &npar);
+
+#if __OPENCALC__ 
+  tree->SetBranchAddress("muonmomentum", &muonmomentum);
+  tree->SetBranchAddress("muontheta", &muontheta);
+  
+  tree->SetBranchAddress("Wtrue", &Wtrue);
+  tree->SetBranchAddress("Wrest", &Wrest);
+  tree->SetBranchAddress("xBj", &xBj);
+  tree->SetBranchAddress("xrest", &xrest);
+  tree->SetBranchAddress("Q2", &Q2);
+
+  tree->SetBranchAddress("protonmomentum", &protonmomentum);
+  tree->SetBranchAddress("protontheta", &protontheta);
+  tree->SetBranchAddress("pionmomentum", &pionmomentum);
+  tree->SetBranchAddress("piontheta", &piontheta);
+  tree->SetBranchAddress("pionEk", &pionEk);
+  tree->SetBranchAddress("baryonmomentum", &baryonmomentum);
+  tree->SetBranchAddress("baryontheta", &baryontheta);
+  tree->SetBranchAddress("baryonmass", &baryonmass);
+
+  tree->SetBranchAddress("dpt", &dpt);
+  tree->SetBranchAddress("dphit", &dphit);
+  tree->SetBranchAddress("dalphat", &dalphat);
+  tree->SetBranchAddress("neutronmomentum", &neutronmomentum);
+  tree->SetBranchAddress("dpTT", &dpTT);
+#endif
+
+#if __OPENCLR__   
+  tree->SetBranchAddress("RESmass", &RESmass);
+  tree->SetBranchAddress("adlerPhi", &adlerPhi);
+  tree->SetBranchAddress("lrsign", &lrsign);
+  tree->SetBranchAddress("w2", &w2);
+  
+  tree->SetBranchAddress("pseudoPhi", &pseudoPhi);
+  tree->SetBranchAddress("pseudosign", &pseudosign);
+  tree->SetBranchAddress("wpseudo2", &wpseudo2);
+
+  tree->SetBranchAddress("CLR_KNsrc", &CLR_KNsrc);  
+#endif
+  
+#if __OPENDPTT__  
+  tree->SetBranchAddress("dpTT20s", &dpTT20s);
+  tree->SetBranchAddress("dpTT10s", &dpTT10s);
+  tree->SetBranchAddress("dpTT5s", &dpTT5s);
+  tree->SetBranchAddress("dpTT2s", &dpTT2s);
+#endif
+
+}
+
 void FillTopoTaskHist()
 {
+
+#if __OPENCALC__ 
+  hmuonmomentum->Fill(muonmomentum,perweight);
+  hmuontheta->Fill(muontheta,perweight);
+
+  hQ2->Fill(Q2,perweight);
+  hxBj->Fill(xBj,perweight);
+  hxrest->Fill(xrest,perweight);
+  
   hprotonmomentum->Fill(protonmomentum,perweight);
-  hprotontheta->Fill(protontheta,perweight);
-  
+  hprotontheta->Fill(protontheta,perweight);  
   hpionmomentum->Fill(pionmomentum,perweight);
-  hpionEk->Fill(pionEk,perweight);
   hpiontheta->Fill(piontheta,perweight);
-  
+  hpionEk->Fill(pionEk,perweight);
   hbaryonmomentum->Fill(baryonmomentum,perweight);
   hbaryontheta->Fill(baryontheta,perweight);
   hbaryonmass->Fill(baryonmass,perweight);
   
-  hdalphat->Fill(dalphat,perweight);
-  hdphit->Fill(dphit,perweight);
   hdpt->Fill(dpt,perweight);
+  hdphit->Fill(dphit,perweight);
+  hdalphat->Fill(dalphat,perweight);
   hneutronmomentum->Fill(neutronmomentum,perweight);
-  
-  //hprotonTT->Fill(protonTT,perweight);
-  //hpionTT->Fill(pionTT,perweight);
   hdpTT->Fill(dpTT,perweight);
+#endif
 
-  if(hdpTT20s){
-    hdpTT20s->Fill(dpTT20s,perweight);
-    hdpTT10s->Fill(dpTT10s,perweight);
-    hdpTT5s->Fill(dpTT5s,perweight);
-    hdpTT2s->Fill(dpTT2s,perweight);
+#if __OPENCLR__
+  if( fabs(lrsign)<1E-6 ){
+    printf("\n\n\nstrange lrsign! %f\n\n\n", lrsign);exit(1);
   }
 
-  //hdpTy->Fill(dpTy,perweight);
-
-  if(OPENLR){
-    if( fabs(lrsign)<1E-6 ){
-      printf("\n\n\nstrange lrsign! %f\n\n\n", lrsign);exit(1);
-    }
-
-    hRESmass->Fill(RESmass,perweight);
-    hadlerPhi->Fill(adlerPhi,w2*perweight);
-    hoobphi->Fill(adlerPhi, perweight);
-    hlrsign->Fill(lrsign,perweight);
-    hKNsrc->Fill(KNsrc,perweight);
-    //hpseudoPhi->Fill(pseudoPhi, wpseudo2*perweight);
-    //hpseudosign->Fill(pseudosign,perweight);
+  hRESmass->Fill(RESmass,perweight);
+  hadlerPhi->Fill(adlerPhi,w2*perweight);
+  //hoobphi->Fill(adlerPhi, perweight);
+  hlrsign->Fill(lrsign,perweight);
+  hCLR_KNsrc->Fill(CLR_KNsrc,perweight);
+  //hpseudoPhi->Fill(pseudoPhi, wpseudo2*perweight);
+  //hpseudosign->Fill(pseudosign,perweight);
     
-    hlrdpt->Fill(dpt, lrsign * perweight);
-    hlrdpTT->Fill(dpTT, w2 * perweight);
-    hKNdpt->Fill(dpt, KNsrc * perweight);
-    hsumdpt->Fill(dpt, perweight);//sampe as dpt but with different binning
-    //hpseudodpt->Fill(dpt, pseudosign * perweight);
-  }
+  //hlrdpt->Fill(dpt, lrsign * perweight);
+  //hlrdpTT->Fill(dpTT, w2 * perweight);
+  //hKNdpt->Fill(dpt, CLR_KNsrc * perweight);
+  //hsumdpt->Fill(dpt, perweight);//sampe as dpt but with different binning
+  //hpseudodpt->Fill(dpt, pseudosign * perweight);
+#endif
 
-  /*
-    const int ndraw = tree->Project("muonmomentum"+modes[imode],"muonmomentum",tmpcut);
-    cout<<"ndraw "<<ndraw<<endl;
-    
-    tree->Project("muontheta"+modes[imode],"muontheta",tmpcut);
-    tree->Project("protonmomentum"+modes[imode],"protonmomentum",tmpcut);
-    tree->Project("protontheta"+modes[imode],"protontheta",tmpcut);
-    tree->Project("pionmomentum"+modes[imode],"pionmomentum",tmpcut);
-    tree->Project("piontheta"+modes[imode],"piontheta",tmpcut);
-    tree->Project("baryonmomentum"+modes[imode],"baryonmomentum",tmpcut);
-    tree->Project("baryontheta"+modes[imode],"baryontheta",tmpcut);
-    tree->Project("baryonmass"+modes[imode],"baryonmass",tmpcut);
-    tree->Project("dalphat"+modes[imode],"dalphat",tmpcut);
-    tree->Project("dphit"+modes[imode],"dphit",tmpcut);
-    tree->Project("dpt"+modes[imode],"dpt",tmpcut);
-    tree->Project("neutronmomentum"+modes[imode],"neutronmomentum",tmpcut);
-  */
+#if __OPENDPTT__ 
+  hdpTT20s->Fill(dpTT20s,perweight);
+  hdpTT10s->Fill(dpTT10s,perweight);
+  hdpTT5s->Fill(dpTT5s,perweight);
+  hdpTT2s->Fill(dpTT2s,perweight);
+#endif
   
 }
 
 void FillHist(const bool passwr, const bool isTopoTask)
 {
+#if __OPENCALC__
   //no cut on W for W
   hWtrue->Fill(Wtrue,perweight);
   hWrest->Fill(Wrest,perweight);
-
+#endif
+  
   if(passwr){
-    hQ2->Fill(Q2,perweight);
-    hxBj->Fill(xBj,perweight);
-    hxrest->Fill(xrest,perweight);
-    //henergyCCH->Fill(energyCCH,perweight);
-    //hxCCH->Fill(xCCH,perweight);
-
-    hmuonmomentum->Fill(muonmomentum,perweight);
-    hmuontheta->Fill(muontheta,perweight);
     henu->Fill(enu,perweight);
 
     //only fill if this is a topo task
@@ -158,6 +193,8 @@ void FillHist(const bool passwr, const bool isTopoTask)
 
 vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid, TList * lout)
 {
+  //leave it like this
+
   vector<TString> hhs;
 
   hQ2  = new TH1D("Q2"+tag,"", 30, 0, 2); lout->Add(hQ2);
@@ -192,7 +229,7 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     hoobphi = new TH1D("oobphi"+tag,"", 60, 0, 360); lout->Add(hoobphi);
     hlrsign = new TH1D("lrsign"+tag,"", 3, -1.5, 1.5); lout->Add(hlrsign);
     hw2 = new TH1D("w2"+tag,"", 3, -1.5, 1.5); lout->Add(hw2); 
-    hKNsrc = new TH1D("KNsrc"+tag,"", 3, -1.5, 1.5); lout->Add(hKNsrc);
+    hCLR_KNsrc = new TH1D("CLR_KNsrc"+tag,"", 3, -1.5, 1.5); lout->Add(hCLR_KNsrc);
     
     /*
       hpseudoPhi = new TH1D("pseudoPhi"+tag,"", 60, 0, 360); lout->Add(hpseudoPhi);
@@ -311,13 +348,12 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       hdpTy = new TH1D("dpTy"+tag,"", sizeof(Kbin)/sizeof(double)-1, Kbin);
     }
     
-    if(OPENLR){
-      hlrdpt = new TH1D("lrdpt"+tag,"", 20, 0, 2);
-      hlrdpTT = new TH1D("lrdpTT"+tag,"", 40, -2, 2);
-      hKNdpt = new TH1D("KNdpt"+tag,"", 20, 0, 2);
-      hsumdpt = new TH1D("sumdpt"+tag,"", 20, 0, 2);
-      //hpseudodpt = new TH1D("pseudodpt"+tag,"", 20, 0, 2);
-    }
+    hlrdpt = new TH1D("lrdpt"+tag,"", 20, 0, 2);
+    hlrdpTT = new TH1D("lrdpTT"+tag,"", 40, -2, 2);
+    hKNdpt = new TH1D("KNdpt"+tag,"", 20, 0, 2);
+    hsumdpt = new TH1D("sumdpt"+tag,"", 20, 0, 2);
+    //hpseudodpt = new TH1D("pseudodpt"+tag,"", 20, 0, 2);
+    
 
     TH1D * hstmp[]={hdalphat, hdphit, hdpt, hprotonTT, hpionTT, hdpTT, hdpTT20s, hdpTT10s, hdpTT5s, hdpTT2s, hdpTy, hlrdpt, hlrdpTT, hKNdpt, hsumdpt};
     //hpseudodpt, 
@@ -377,118 +413,6 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
 
   return hhs;
 }
-
-void SetTree(TTree * tree, const int anaid)
-{
-  tree->SetBranchAddress("npar", &npar);
-  tree->SetBranchAddress("evtMode", &evtMode);
-  tree->SetBranchAddress("targetZ", &targetZ);
-  tree->SetBranchAddress("perweight", &perweight);
-  //tree->SetBranchAddress("prod", &prod);
-  
-  tree->SetBranchAddress("Q2", &Q2);
-  tree->SetBranchAddress("xBj", &xBj);
-  tree->SetBranchAddress("xrest", &xrest);
-  tree->SetBranchAddress("Wtrue", &Wtrue);
-  tree->SetBranchAddress("Wrest", &Wrest);
-  //tree->SetBranchAddress("energyCCH", &energyCCH);
-  //tree->SetBranchAddress("xCCH", &xCCH);
-  
-  if(anaid!=NUBAR1PI){   
-    tree->SetBranchAddress("muonmomentum", &muonmomentum);
-    tree->SetBranchAddress("muontheta", &muontheta);
-    tree->SetBranchAddress("enu", &enu);    
-  }
-  
-  if(OPENLR){
-    tree->SetBranchAddress("RESmass", &RESmass);
-    tree->SetBranchAddress("adlerPhi", &adlerPhi);
-    tree->SetBranchAddress("lrsign", &lrsign);
-    tree->SetBranchAddress("w2", &w2);
-    tree->SetBranchAddress("KNsrc", &KNsrc);
-
-    /*
-      tree->SetBranchAddress("pseudoPhi", &pseudoPhi);
-      tree->SetBranchAddress("pseudosign", &pseudosign);
-      tree->SetBranchAddress("wpseudo2", &wpseudo2);
-    */
-  }
-    
-  if(anaid==CC0piNpID || anaid == CC1piNpID || anaid == CCMpiNpID || anaid == CCEXCL3H1 || anaid == CCEXCL3H4 ){
-    tree->SetBranchAddress("protonmomentum", &protonmomentum);
-    tree->SetBranchAddress("protontheta", &protontheta);
-    
-    if(anaid!=CC0piNpID){
-      tree->SetBranchAddress("pionmomentum", &pionmomentum);
-      tree->SetBranchAddress("pionEk", &pionEk);
-      tree->SetBranchAddress("piontheta", &piontheta);
-      tree->SetBranchAddress("baryonmomentum", &baryonmomentum);
-      tree->SetBranchAddress("baryontheta", &baryontheta);
-      tree->SetBranchAddress("baryonmass", &baryonmass);
-    }
-    if(anaid!=CCEXCL3H1 && anaid!=CCEXCL3H4){
-      tree->SetBranchAddress("dalphat", &dalphat);
-      tree->SetBranchAddress("dphit", &dphit);
-      tree->SetBranchAddress("dpt", &dpt);
-      tree->SetBranchAddress("neutronmomentum", &neutronmomentum);
-    }
-    //tree->SetBranchAddress("protonTT", &protonTT);
-    //tree->SetBranchAddress("pionTT", &pionTT);
-    tree->SetBranchAddress("dpTT", &dpTT);
-    if(anaid==CCEXCL3H1 || anaid==CCEXCL3H4){
-      tree->SetBranchAddress("dpTT20s", &dpTT20s);
-      tree->SetBranchAddress("dpTT10s", &dpTT10s);
-      tree->SetBranchAddress("dpTT5s", &dpTT5s);
-      tree->SetBranchAddress("dpTT2s", &dpTT2s);
-    }
-    //tree->SetBranchAddress("dpTy", &dpTy);
-  }
-
-}
-
-/*//too slow
-void drawInSlice(const int ncutbin, double cutbins[], const TString cutvar, const int ndrawbin, const double drawbins[], const TString drawvar, TTree *tree,  const TString cut0, const TString modename, TList *lout)
-{
-  int totnd = 0;
-  const double *binlow=cutbins;
-  const double *binup=&(cutbins[1]);
-
-  for(int ibin=0; ibin<ncutbin; ibin++){
-    const double binwidth = binup[ibin]-binlow[ibin];
-    const TString tmpcut = Form("perweight * %f * (%s %s) ", 1/binwidth, cut0.Data(), Form("&& (%f<%s && %s<%f)", binlow[ibin], cutvar.Data(), cutvar.Data(), binup[ibin]));
-
-    const TString hname=Form("%s%d%s", drawvar.Data(), ibin, modename.Data());
-    TH1D * hhii = new TH1D(hname, tmpcut, ndrawbin, drawbins); lout->Add(hhii);
-    const int ndraw = tree->Project(hname, drawvar, tmpcut);
-    totnd+=ndraw;
-    cout<<"Drawing "<<hname<<" "<<drawvar<<" tmpcut "<<tmpcut<<" ndraw "<<ndraw<<" totnd "<<totnd<<endl;
-  }
-}
-*/
-
-/* not used any more
-void getSliceYDrawX(TH2D * h2d, TList * lout)
-{
-  for(int ii=1; ii<=h2d->GetNbinsY(); ii++){
-    const int histid=ii-1;
-    TString tmpname(h2d->GetName());
-    //remove xxxVS
-    tmpname=tmpname(tmpname.First("S")+1,tmpname.Length());
-    tmpname.Insert(tmpname.First("_"),Form("%d",histid));
-    TH1D * hpj= h2d->ProjectionX(tmpname, ii, ii);
-    hpj->SetTitle(Form("%s %f %f", h2d->GetName(), h2d->GetYaxis()->GetBinLowEdge(ii), h2d->GetYaxis()->GetBinUpEdge(ii)));
-    lout->Add(hpj);
-  }
-
-}
-//used in getting slice 
-    //not needed any more and don't confuse with TH3D
-    TH2D * h2d = (TH2D*) lout->At(ii);
-    const TString n2d=h2d->GetName();
-    if(n2d.Contains("VS")){
-      getSliceYDrawX(h2d, l2d);
-    }
-*/
 
 //end of namespace
 }
