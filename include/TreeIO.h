@@ -8,6 +8,8 @@
 #define __OPENDPTT__ 0
 #define __OPENMMECCQE__ 0
 
+using namespace std;
+
 namespace TreeIO
 {
 

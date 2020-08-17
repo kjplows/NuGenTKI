@@ -223,20 +223,18 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     henu  = new TH1D("enu"+tag,"", 60, 0, 20); lout->Add(henu);
   }
   
-  if(OPENLR){      
-    hRESmass = new TH1D("RESmass"+tag,"", 60, 0, 3); lout->Add(hRESmass);
-    hadlerPhi = new TH1D("adlerPhi"+tag,"", 60, 0, 360); lout->Add(hadlerPhi);
-    hoobphi = new TH1D("oobphi"+tag,"", 60, 0, 360); lout->Add(hoobphi);
-    hlrsign = new TH1D("lrsign"+tag,"", 3, -1.5, 1.5); lout->Add(hlrsign);
-    hw2 = new TH1D("w2"+tag,"", 3, -1.5, 1.5); lout->Add(hw2); 
-    hCLR_KNsrc = new TH1D("CLR_KNsrc"+tag,"", 3, -1.5, 1.5); lout->Add(hCLR_KNsrc);
-    
-    /*
-      hpseudoPhi = new TH1D("pseudoPhi"+tag,"", 60, 0, 360); lout->Add(hpseudoPhi);
-      hpseudosign = new TH1D("pseudosign"+tag,"", 3, -1.5, 1.5); lout->Add(hpseudosign);
-      hwpseudo2 = new TH1D("wpseudo2"+tag,"", 3, -1.5, 1.5); lout->Add(hwpseudo2); 
-    */
-  }
+  hRESmass = new TH1D("RESmass"+tag,"", 60, 0, 3); lout->Add(hRESmass);
+  hadlerPhi = new TH1D("adlerPhi"+tag,"", 60, 0, 360); lout->Add(hadlerPhi);
+  hoobphi = new TH1D("oobphi"+tag,"", 60, 0, 360); lout->Add(hoobphi);
+  hlrsign = new TH1D("lrsign"+tag,"", 3, -1.5, 1.5); lout->Add(hlrsign);
+  hw2 = new TH1D("w2"+tag,"", 3, -1.5, 1.5); lout->Add(hw2); 
+  hCLR_KNsrc = new TH1D("CLR_KNsrc"+tag,"", 3, -1.5, 1.5); lout->Add(hCLR_KNsrc);
+  
+  /*
+    hpseudoPhi = new TH1D("pseudoPhi"+tag,"", 60, 0, 360); lout->Add(hpseudoPhi);
+    hpseudosign = new TH1D("pseudosign"+tag,"", 3, -1.5, 1.5); lout->Add(hpseudosign);
+    hwpseudo2 = new TH1D("wpseudo2"+tag,"", 3, -1.5, 1.5); lout->Add(hwpseudo2); 
+  */
 
   if(anaid==CC0piNpID || anaid == CC1piNpID || anaid == CCMpiNpID || anaid == CCEXCL3H1 || anaid == CCEXCL3H4 ){
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
