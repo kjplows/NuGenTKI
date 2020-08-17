@@ -1,4 +1,4 @@
-export GFSa9nuCH="list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCH.list"
+export GFSa9nuCH="list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.list"
 export GFSPIZEROa7nuCH=${GFSa9nuCH}
 
 export LOWRECOILa1nuCH=${GFSa9nuCH}
@@ -20,19 +20,19 @@ export NUGASa8nubar=
 ntostop=
 #10000000
 
-tag=MINERvAGENIEOOB_cleanCodetest_
+tag=MINERvAGENIEv3OOB_LE_
 #MINERvAGENIEOOB_LE_
 
 ####################################
 
 mkexe.sh anaGenerator -I${NUGENTKI}/include
 
-exit
+#exit
 
 #GFS 7 : PIZERO
 opt=${tag}GFSPIZEROa7nuCH;    nohup ./doAna.sh $GFSPIZEROa7nuCH    ${opt} 7 ${ntostop} > see${opt}.log &
 
-exit
+#exit
 
 #GFS 9 : 0PI
 opt=${tag}GFSa9nuCH;          nohup ./doAna.sh $GFSa9nuCH          ${opt} 9 ${ntostop} > see${opt}.log &
