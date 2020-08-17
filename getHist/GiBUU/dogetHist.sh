@@ -35,20 +35,19 @@ mkexe.sh getHist -I${NUGENTKI}/include
 
 #exit
 
+#GFS 1
+
+#opt=${tag}GFSa9t1nuH;               nohup ./getHist $GFSa9t1nuH ${opt} 1  > see${opt}.log &
+ opt=${tag}GFSa9t1nuC;               nohup ./getHist $GFSa9t1nuC ${opt} 1  > see${opt}.log &
+#opt=${tag}GFSa9t1nuNOFSIC;          nohup ./getHist $GFSa9t1nuNOFSIC ${opt} 1  > see${opt}.log &
+
+exit
 
 #GFS 4 for GFSPIZEROa7 inclusive pi0
 
 #opt=${tag}GFSPIZEROa7t4nuH;            nohup ./getHist $GFSPIZEROa7t4nuH            ${opt} 4   > see${opt}.log &
  opt=${tag}GFSPIZEROa7t4nuC;            nohup ./getHist $GFSPIZEROa7t4nuC            ${opt} 4   > see${opt}.log &
 #opt=${tag}GFSPIZEROa7t4nuNOFSIC;       nohup ./getHist $GFSPIZEROa7t4nuNOFSIC       ${opt} 4   > see${opt}.log &
-
-exit
-
-#GFS 1
-
-#opt=${tag}GFSa9t1nuH;               nohup ./getHist $GFSa9t1nuH ${opt} 1  > see${opt}.log &
- opt=${tag}GFSa9t1nuC;               nohup ./getHist $GFSa9t1nuC ${opt} 1  > see${opt}.log &
-#opt=${tag}GFSa9t1nuNOFSIC;          nohup ./getHist $GFSa9t1nuNOFSIC ${opt} 1  > see${opt}.log &
 
 exit
 
