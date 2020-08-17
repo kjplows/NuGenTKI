@@ -13,8 +13,6 @@
 
 #include "style.h"
 
-//#include "data/NuWro_JS.h"
-
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
   printf("\n\nget MINERvA %s\n\n", pint.Data());
@@ -163,8 +161,6 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     filetag.push_back("data/NuWro_JS/xianguo_august2020_effSF");
     if(kmix){
       //test_not_to_use filetag.push_back("data/nuisance/allnuisance/LocalFGNievesQEAndMEC_LFGHNFSI_"+pi0v);  
-      //filetag.push_back("data/GFSPIZEROMINERvAdcGENIELFGHN");
-      //filetag.push_back("nuwroplaceholder");
     }
 
     const TString tmpg = kmix?"NuWro ":"";
@@ -213,14 +209,9 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   else if(sgen=="oobgibuu"){
     if(pint=="0pi"){
       filehead = "data/GFS0PIMINERvAGiBUULE_CarbonOnly";
-      //test filehead = "data/GFS0PIMINERvAGiBUUPiCut2Fixed";
-      //filehead = "data/GFS0PIMINERvAGiBUU4kEns";
-      //filehead = "data/GFS0piMINERvAGiBUU";
     }
     else if(pint=="pi0"){
       filehead = "data/GFSPIZEROMINERvAGiBUULE_CarbonOnly";
-      //filehead = "data/GFSPIZEROMINERvAGiBUUPiCut2Fixed";
-      //filehead = "data/GFSPIZEROMINERvAGiBUU4kEns";
     }
     filetag.push_back("");
 
@@ -243,17 +234,17 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
-  else if(sgen=="oobgenie306"){
+  else if(sgen=="oobgenie"){
     if(pint=="0pi"){
-      filehead = "data/GFS0piMINERvAGENIEOOB";
+      filehead = "data/GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly";
     }
     else if(pint=="pi0"){
-      filehead = "data/GFSPIZEROMINERvAGENIEOOB";
+      filehead = "data/GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly";
     }
     filetag.push_back("");
 
     leghead="GENIE v3.0.6";
-    histname = filehead(filehead.First("/")+1, 1000)+"nu/"+varname[ivar];
+    histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
   else{
@@ -267,18 +258,11 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   const int stkcols[]={1014, 1003, 1002, 1009, 1010, 1007, 1012, 1005, 1011, 1008, 1014, 1017};
   const int lincols[]={1015, 1002, 1009, 1008, 1011, 1014, 1017};
 
-  int kdcGENIE = false;
-
   for(unsigned ii=0; ii<nhist; ii++){
     TFile * fmc = 0x0;
     TH1D *htmp = 0x0;
     THStack * stmp = 0x0;
 
-    if(filetag[ii].Contains("nuwroplaceholder")){
-      //htmp = getNuWroSF();
-    }
-    else{
-    //===>
     fmc = new TFile(Form("%s%s.root", filehead.Data(),  filetag[ii].Data()));
     if(!fmc){
       cout<<"no fmc!"<<endl; exit(1);
@@ -290,7 +274,6 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
       if(!htmp){
         if(!stmp){
           stmp = dynamic_cast<THStack*> (fmc->Get(histnameGENIE));
-          kdcGENIE = true;
         }
         if(stmp){//also can be GiBUU here
           htmp = style::GetStackedSum(stmp);
@@ -307,8 +290,6 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
       if(!sgen.Contains("oob")&&varname[ivar]!="dalphat"){
         style::ScaleXaxis(htmp, 1E-3);
       }
-    }
-    //<===
     }
 
     style::ResetStyle(htmp);
@@ -363,7 +344,7 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
 
     const double fchi2 = style::GetChi2(hdata, *dataCov, noff, xnbin, hfit, dummyunit);
     printf("Check %s %d %s chi2 %e\n", hfit->GetName(), ii, pi0v.Data(), fchi2);
-    if(smc.size() && !kdcGENIE){
+    if(smc.size()){
       leghead += Form("  #chi^{2}=%.1f", fchi2);
     }
     else{
@@ -517,11 +498,11 @@ int main()
   opt.push_back(8);
 
   vector<TString> sgen;
-  sgen.push_back("oobgibuu");
-  //sgen.push_back("oobnofsigibuu");
-  //sgen.push_back("oobgenie306");
-  //sgen.push_back("nuisancenuwro");
   sgen.push_back("PRD");
+  sgen.push_back("oobgibuu");
+  sgen.push_back("oobgenie");
+  //sgen.push_back("oobnofsigibuu");
+  //sgen.push_back("nuisancenuwro");
   //sgen.push_back("nuisancegenie");
 
   vector<TString> pint;
