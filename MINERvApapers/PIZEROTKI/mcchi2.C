@@ -233,14 +233,17 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   }
   else if(sgen=="oobgenie"){
     if(pint=="0pi"){
-      filehead = "data/GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly";
+      //filehead = "data/GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly";
+      filehead = "data/GFS0PIMINERvAGENIE_V2_OOBLE_CarbonOnly";
     }
     else if(pint=="pi0"){
-      filehead = "data/GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly";
+      //filehead = "data/GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly";
+      filehead = "data/GFSPIZEROMINERvAGENIE_V2_OOBLE_CarbonOnly";
     }
     filetag.push_back("");
 
-    leghead="GENIE v3.0.6";
+    //leghead="GENIE v3.0.6";
+    leghead="GENIE v2.12.10";
     histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
