@@ -1,4 +1,4 @@
-calling NuGenTKI/setup.sh
+echo calling NuGenTKI/setup.sh
 
 export NUGENTKI=$(pwd)
 export LOCALBIN=${NUGENTKI}/bin
