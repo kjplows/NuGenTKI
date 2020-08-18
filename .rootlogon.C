@@ -12,12 +12,15 @@
   */
   const TString pwd = gSystem->pwd();
   cout<<endl;
-  cout<<"Welcome to protoDUNETKI repository!"<<endl;
+  cout<<"Welcome to NuGenTKI repository!"<<endl;
   cout<<"In path: "<<pwd<<endl;
   cout<<endl;
 
-  const TString libs[]={"EG", "style"};
-  for(unsigned int ii=0; ii<sizeof(libs)/sizeof(TString); ii++){
-    printf("Loading %s ... %d\n",libs[ii].Data(), gSystem->Load("lib"+libs[ii]+".so"));
+  const TString nugentki=gSystem->Getenv("NUGENTKI");
+  if(nugentki!=""){
+    const TString libs[]={"EG", "style"};
+    for(unsigned int ii=0; ii<sizeof(libs)/sizeof(TString); ii++){
+      printf("Loading %s ... %d\n",libs[ii].Data(), gSystem->Load("lib"+libs[ii]+".so"));
+    }
   }
 }
