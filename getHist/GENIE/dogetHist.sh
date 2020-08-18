@@ -1,7 +1,9 @@
-export GFS0PIa9t1nuCarbon="outplot/outAna9_MINERvAGENIEv3OOB_LE_GFSa9nuCH_Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.root"
+export GFS0PIa9t1nuCarbon="outplot/outAna9_MINERvAGENIE_V2_OOB_LE_GFSa9nuCH_Filelist_GENIEOOB_V2_BeamNu_EnuMINERvA_TargetCarbon.root"
+#"outplot/outAna9_MINERvAGENIEv3OOB_LE_GFSa9nuCH_Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.root"
 export GFS0PIa9t1nuCH=
 
-export GFSPIZEROa7t4nuCarbon="outplot/outAna7_MINERvAGENIEv3OOB_LE_GFSPIZEROa7nuCH_Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.root"
+export GFSPIZEROa7t4nuCarbon="outplot/outAna7_MINERvAGENIE_V2_OOB_LE_GFSPIZEROa7nuCH_Filelist_GENIEOOB_V2_BeamNu_EnuMINERvA_TargetCarbon.root"
+#"outplot/outAna7_MINERvAGENIEv3OOB_LE_GFSPIZEROa7nuCH_Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.root"
 export GFSPIZEROa7t4nuCH=
 
 export GFSt2nuCH=${GFSt1nuCH}
@@ -22,7 +24,8 @@ export GFSEXPa3t2nuCH=
 
 export GFSPIZEROa7t2nuCH=
 
-export tag=MINERvAGENIEv3OOB_LE_
+export tag=MINERvAGENIE_V2_OOB_LE_
+#MINERvAGENIEv3OOB_LE_
 
 #######################################################################################
 
