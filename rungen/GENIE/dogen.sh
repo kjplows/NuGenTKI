@@ -34,8 +34,8 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
-aaa=a1
-jobid=b3${aaa}
+aaa=V2
+jobid=c1${aaa}
 #x3
 
 GENIETAG="GENIEOOB_${aaa}"
