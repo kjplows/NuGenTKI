@@ -35,7 +35,8 @@ NUBAR="Nubar"
 
 ################################################################################################
 aaa=V2
-jobid=c1${aaa}
+model=" --event-generator-list Default+CCMEC"
+jobid=c2${aaa}
 #x3
 
 GENIETAG="GENIEOOB_${aaa}"
@@ -185,7 +186,7 @@ do
             #echo; echo; echo NO MEC!!!; echo; echo; echo
             #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections /data/t2k/xlu/software/GENIE/gxspl.xml -o output${tag}.root --event-generator-list Default > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
-             cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f /data/t2k/xlu/software/GENIE/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+             cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f /data/t2k/xlu/software/GENIE/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
                 
             echo $cmd
             echo
