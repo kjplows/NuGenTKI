@@ -391,11 +391,16 @@ void GENIESetID(const int pdg, const double tmptote)
          }
    */
   lineIsBkgParticle = false;
+
+  if(tmppdg>=5000){
+    printf("GeneratorIO::GENIESetID bad pdg %d\n", pdg); exit(1);
+  }
+
   //two quarks (meson) 3 digits http://pdg.lbl.gov/2007/reviews/montecarlorpp.pdf  The general form is a 7–digit number: ±n nr nL nq1 nq2 nq3 nJ
   if( 
      (tmppdg>99 && tmppdg<1000) || 
      ( tmppdg == 22 || tmppdg == 11 ) ||
-     ( tmppdg > 3000 )
+     ( tmppdg > 3000 && tmppdg < 5000 )
      //diquark !
      || ( tmppdg == 2103 )
       ){
@@ -407,7 +412,7 @@ void GENIESetID(const int pdg, const double tmptote)
   if(
      (tmppdg>99 && tmppdg<1000) ||
      ( tmppdg == 22 && tmptote > 0.01 ) ||
-     ( tmppdg > 3000 )
+     ( tmppdg > 3000 && tmppdg < 5000 )
      ){
     lineIsMMECCQEBkg = true;
   }
