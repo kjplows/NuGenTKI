@@ -1,4 +1,4 @@
-export GFSa9nuCH="list/Filelist_GENIEOOB_V2_BeamNu_EnuMINERvA_TargetCarbon.list"
+export GFSa9nuCH="list/Filelist_GENIE_V2RG_BeamNu_EnuMINERvA_TargetCarbon.list"
 #"list/Filelist_GENIEOOB_a1_BeamNu_EnuMINERvA_TargetCarbon.list"
 export GFSPIZEROa7nuCH=${GFSa9nuCH}
 
@@ -21,7 +21,7 @@ export NUGASa8nubar=
 ntostop=
 #10000000
 
-tag=MINERvAGENIE_V2_OOB_LE_
+tag=MINERvAGENIE_V2RG_LE_
 #MINERvAGENIEv3OOB_LE_
 
 ####################################

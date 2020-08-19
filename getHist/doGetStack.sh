@@ -1,6 +1,7 @@
 dir0=$(pwd)
 
-for anaid in GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGENIE_V2_OOBLE_CarbonOnly GFS0PIMINERvAGENIE_V2_OOBLE_CarbonOnly 
+for anaid in GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly GFS0PIMINERvAGENIE_V2RG_LE_CarbonOnly
+#GFSPIZEROMINERvAGENIE_V2_OOBLE_CarbonOnly GFS0PIMINERvAGENIE_V2_OOBLE_CarbonOnly 
 #GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly 
 
 do
@@ -33,10 +34,10 @@ do
 
     commonVar="enu muonmomentum muontheta Q2 xBj xrest Wtrue Wrest "
 
-    if [  $anaid == GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_V2_OOBLE_CarbonOnly -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly ]
+    if [  $anaid == GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly ]
     then
         varray=${commonVar}" protonmomentum protontheta dpt dphit dalphat neutronmomentum"
-    elif [ $anaid == GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2_OOBLE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly ]
+    elif [ $anaid == GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly ]
     then
         varray=${commonVar}" protonmomentum protontheta pionmomentum piontheta pionEk baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT "
 

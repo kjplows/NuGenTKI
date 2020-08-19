@@ -35,11 +35,13 @@ NUBAR="Nubar"
 
 ################################################################################################
 aaa=V2RG
-#model=" --event-generator-list Default+CCMEC"
-jobid=c3${aaa}
+#v3OOB
+#V2OOB
+model=" --event-generator-list Default+CCMEC"
+jobid=c4${aaa}
 #x3
 
-GENIETAG="GENIEOOB_${aaa}"
+GENIETAG="GENIE_${aaa}"
 #"GENIE2LFGHN_${aaa}"
 #"GENIEISO"
 
