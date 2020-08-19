@@ -34,9 +34,9 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
-aaa=V2
-model=" --event-generator-list Default+CCMEC"
-jobid=c2${aaa}
+aaa=V2RG
+#model=" --event-generator-list Default+CCMEC"
+jobid=c3${aaa}
 #x3
 
 GENIETAG="GENIEOOB_${aaa}"
@@ -199,7 +199,7 @@ cd $(pwd)
 
 date
 
-#echo UserPhysicsOptions.xml $(readlink -f /data/t2k/xlu/software/GENIE/UserPhysicsOptions.xml)
+cp \$GENIE/config/UserPhysicsOptions.xml .
 
 ${cmd}
 
