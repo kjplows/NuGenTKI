@@ -34,16 +34,14 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
-aaa=V2RG
+aaa=v2DC
+#V2RG
 #v3OOB
-#V2OOB
 model=" --event-generator-list Default+CCMEC"
-jobid=c4${aaa}
+jobid=c5${aaa}
 #x3
 
 GENIETAG="GENIE_${aaa}"
-#"GENIE2LFGHN_${aaa}"
-#"GENIEISO"
 
 nevt=100000
 #1000
