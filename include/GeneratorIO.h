@@ -288,6 +288,9 @@ void SetGENIEMode(const TString code)
   else if(code.Contains("MEC")){
     evtMode = k2P2H;
   }
+  else if(!code.Contains("COH") && !code.Contains("IMD")){
+    printf("GeneratorIO::SetGENIEMode unknown evtMode %s\n", code.Data()); exit(1);
+  }
 
   return;
 
