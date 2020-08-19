@@ -231,19 +231,16 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
-  else if(sgen=="oobgenie"){
+  else if(sgen=="geniev3oob"){
     if(pint=="0pi"){
-      //filehead = "data/GFS0PIMINERvAGENIEv3OOBLE_CarbonOnly";
-      filehead = "data/GFS0PIMINERvAGENIE_V2_OOBLE_CarbonOnly";
+      filehead = "data/GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly";
     }
     else if(pint=="pi0"){
-      //filehead = "data/GFSPIZEROMINERvAGENIEv3OOBLE_CarbonOnly";
-      filehead = "data/GFSPIZEROMINERvAGENIE_V2_OOBLE_CarbonOnly";
+      filehead = "data/GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly";
     }
     filetag.push_back("");
 
-    //leghead="GENIE v3.0.6";
-    leghead="GENIE v2.12.10";
+    leghead="GENIE v3.0.6";
     histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
@@ -513,7 +510,7 @@ int main()
   vector<TString> sgen;
   sgen.push_back("PRD");
   sgen.push_back("oobgibuu");
-  //sgen.push_back("oobgenie");
+  sgen.push_back("geniev3oob");
   sgen.push_back("genieV2RG");
   //sgen.push_back("oobnofsigibuu");
   //sgen.push_back("nuisancenuwro");
