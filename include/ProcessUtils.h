@@ -490,6 +490,9 @@ void ProceedMINERvAGFS0PI()
     AddABit(totparcount, BKGBIT);
     AddABit(npar, BKGBIT);
   }
+  else if(!IsNeutron()){
+    printf("GFS0PI strange background! linePID %d lineRawID %d\n", linePID, lineRawID); exit(1);
+  }
 }
 
 void ProceedMINERvAGFSPIZERO()
