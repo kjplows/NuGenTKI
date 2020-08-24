@@ -496,7 +496,13 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   if((sgen.Contains("oobgibuu")||sgen.Contains("nuisancenuwro")||sgen.Contains("PRD"))&&pint.Contains("pi0")){
     const double xsublable = kleft?(opt==4?0.75:(kthin?0.8:0.89)):(kthin?0.2:0.15);
     const double ysublable = /*(opt==8&&sgen.Contains("gibuu"))?0.48:*/0.83;
-    TLatex * lt1 = new TLatex(xsublable, ysublable, sgen.Contains("gibuu")?"(b)":"(a)");
+    TLatex * lt1 = 0x0;
+    if(opt==4){
+      lt1= new TLatex(xsublable, ysublable, sgen.Contains("gibuu")?"(d)":"(c)");
+    }
+    else{
+      lt1= new TLatex(xsublable, ysublable, sgen.Contains("gibuu")?"(b)":"(a)");
+    }
     style::ResetStyle(lt1);
     lt1->Draw();
   }
