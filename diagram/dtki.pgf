@@ -1,0 +1,141 @@
+﻿\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
+
+\newcommand{\nux}{5}
+
+\newcommand{\lx}{2}
+\newcommand{\ly}{5}
+
+\newcommand{\Xx}{1}
+\newcommand{\Xy}{-3}
+\newcommand{\Xz}{3}
+
+\newcommand{\Yx}{1}%\nux+\lx-\Xx}
+\newcommand{\Yy}{-2}%-\ly-\Xy}
+\newcommand{\Yz}{-3}%-\Xz}
+
+\newcommand{\hlen}{0.4}
+\newcommand{\Xlen}{3.16}
+\newcommand{\Xfactor}{\hlen/\Xlen}
+\newcommand{\Ylen}{2.236}%2,2:2.83}
+\newcommand{\Yfactor}{\hlen/\Ylen}
+
+\newcommand{\plen}{5.5}
+\newcommand{\llen}{5.38}%3,5:5.83}
+\newcommand{\lfactor}{\plen/\llen}
+
+\newcommand{\pr}{0.25cm}
+
+\newcommand{\plstyle}{}
+
+\newcommand{\plane}{7.5}
+\newcommand{\zs}{12}
+\newcommand{\yscale}{0.7}
+
+\begin{tikzpicture}[z={(-0.866cm,-0.5cm)}, x={(0.866cm,-0.5cm)}, y={(0cm,1cm)},scale=0.5]
+
+\coordinate (O) at (0,-0.1,-2.2);
+
+
+\coordinate (NDP) at (0,0,-6);
+\coordinate (VERT) at (\nux,0,-6);
+
+
+%%Plane ++, +-, --, -+ width = 1.05+1.5 = 2.55, height 1.8+0.75 = 2.55
+\draw[fill=black!90!white,opacity=0.00] ($ (VERT) + (1.05*\plane,1.7*\plane,0) $) -- ($ (VERT) + (1.05*\plane,-0.55*\plane,0) $) -- ($ (VERT) + (-1.5*\plane,-1.825*\plane,0) $) -- ($ (VERT) + (-1.5*\plane,0.425*\plane,0) $);
+
+\draw node [color=black, above right = 4.05 cm and -0.2 cm] {(b)};
+
+%FS hadrons
+\draw[thick,color=blue][-latex] (VERT) -- ($ (VERT) + (\Xx,\Xy, \Xz) $) node [ right = 0.1cm] {$\vec{p}_\textrm{p}$};
+\draw[thick,color=blue][-latex] (VERT) -- ($ (VERT) + (\Yx,\Yy,\Yz) $) node [below = 0cm] {$\vec{p}_\pi$};
+
+%double transverse axis
+\draw[very thin,-latex] ($ (VERT) + (0,0, -6.5) $) --   ($ (VERT) + (0,0,6.5) $)  node [below  = 0.cm ] {$\hat{z}_\textrm{TT}$};
+
+%px help lines
+%\draw[help lines,style=dashed]  ($ (VERT) + (\Xx,\Xy,\Xz) $) -- ($ (VERT) + (0,0, \Xz) $);
+%\draw[help lines]  ($ (VERT) + (\Xx*\Xfactor,\Xy*\Xfactor, \Xz-\hlen) $) -- ($ (VERT) + (\Xx*\Xfactor,\Xy*\Xfactor, \Xz) $);
+%\draw[help lines]  ($ (VERT) + (\Xx*\Xfactor,\Xy*\Xfactor, \Xz-\hlen) $) -- ($ (VERT) + (0,0, \Xz-\hlen) $);
+
+%py help lines
+%\draw[help lines,style=dashed]  ($ (VERT) + (\Yx,\Yy,\Yz) $)  --  ($ (VERT) + (0,0, \Yz) $);
+%\draw[help lines]  ($ (VERT) + (\Yx*\Yfactor,\Yy*\Yfactor, \Yz+\hlen) $) -- ($ (VERT) + (\Yx*\Yfactor,\Yy*\Yfactor, \Yz) $);
+%\draw[help lines]  ($ (VERT) + (\Yx*\Yfactor,\Yy*\Yfactor, \Yz+\hlen) $) -- ($ (VERT) + (0,0, \Yz+\hlen) $);
+
+%TT projection
+%\draw[thick,color=red][-latex] (VERT)  -- ($ (VERT) + (0,0, \Xz) $) node [ below left = 0.2cm and -0.2cm] {$p^\textrm{X}_\textrm{TT}$};
+%\draw[thick,color=red][-latex] (VERT)  -- ($ (VERT) + (0,0, \Yz) $) node [ below  left = -0.3 cm and -1.1cm ] {$p^\textrm{Y}_\textrm{TT}$};
+
+%neutrino plane
+\draw[help lines,style=\plstyle]  ($ (VERT) + (-\plen,0, \plen) $) -- ($ (VERT) + (0,0, \plen) $) ;
+\draw[help lines,style=\plstyle]  ($ (VERT) + (-\plen,0, \plen) $) -- ($ (VERT) + (-\plen,0, 0.5) $) ;
+\draw[help lines,style=\plstyle]  ($ (VERT) + (-\plen,0, -\plen) $) -- ($ (VERT) + (-3.1,0, -\plen) $) ;
+\draw[help lines,style=dotted]  ($ (VERT) + (-3.1,0, -\plen) $) -- ($ (VERT) + (0,0, -\plen) $) ;
+\draw[help lines,style=\plstyle]  ($ (VERT) + (-\plen,0, -\plen) $) -- ($ (VERT) + (-\plen,0, -1.2) $) ;
+
+%incoming nu
+\draw[help lines, style=dashed]  (NDP)  -- ($ (VERT) +0.6*( $(NDP)-(VERT)$) $); 
+\draw[help lines, style=dotted] ($ (VERT) +0.6*( $(NDP)-(VERT)$) $) -- (VERT); 
+\draw[thick,-latex]  (NDP)  -- ($ (VERT) +0.85*( $(NDP)-(VERT)$) $) node [above left = 0.15cm and -0.1 cm] {$\vec{p}_{\nu}$};
+
+%lepton plane
+\draw[help lines,style=\plstyle]  ($ (VERT) + (0,0,-\plen) $) --($ (VERT) + (\lx*\lfactor,\ly*\lfactor,-\plen) $);
+\draw[help lines,style=\plstyle]  ($ (VERT) + (\lx*\lfactor,\ly*\lfactor,0) $) --($ (VERT) + (\lx*\lfactor,\ly*\lfactor,-\plen) $);
+\draw[help lines,style=\plstyle]  ($ (VERT) + (0,0,\plen) $) --($ (VERT) + (\lx*\lfactor,\ly*\lfactor,\plen) $);
+\draw[help lines,style=\plstyle]  ($ (VERT) + (\lx*\lfactor,\ly*\lfactor,0) $) --($ (VERT) + (\lx*\lfactor,\ly*\lfactor,\plen) $);
+
+%lepton
+\draw[thick,-latex] (VERT) --($ (VERT) + (\lx,\ly,0) $) node [below right =0.1 cm and  -0.1cm] {$\vec{p}_{\mu}$};
+
+%target
+%\draw node [below right = -0.2 cm and 4.7 cm] {p};
+\draw[, pattern=] (VERT) circle (\pr);
+\draw[white] (VERT) circle (\pr);
+
+
+%head
+%\draw node [above right = 4cm and -0.2 cm] {\{X, Y\}};
+%\draw node [above right = 3.5cm and -0.2 cm] {= \{p, $\pi^+$\} for $\nu+\textrm{p}\rightarrow \ell^-+\Delta^{++}$};
+%\draw node [above right = 3cm and -0.2 cm] {or \{p, $\pi^-$\} for $\bar{\nu}+\textrm{p}\rightarrow \ell^++\Delta^0$  };
+
+%%%%%%%%%%%%%% screen
+
+%\draw[help lines,style=dashed]  (VERT) -- ($ (VERT)+(\zs, 0,0)$)  ;
+
+%\draw[help lines,style=dashed]  ($ (VERT) + (\Xx,\Xy,\Xz) $) --  ($ (VERT) + (\zs,\Xy,\Xz) $) ;
+%\draw[help lines,style=dashed]  ($ (VERT) + (0,0,\Xz) $) --  ($ (VERT) + (\zs,0,\Xz) $) ;
+
+%\draw[help lines,style=dashed]  ($ (VERT) + (\Yx,\Yy,\Yz) $) --  ($ (VERT) + (\zs,\Yy,\Yz) $) ;
+%\draw[help lines,style=dashed]  ($ (VERT) + (0,0,\Yz) $) --  ($ (VERT) + (\zs,0,\Yz) $) ;
+
+%\draw[help lines,style=dashed]  ($ (VERT) + (\lx,\ly,0) $) -- ($ (VERT) + (\zs,\ly,0) $);
+
+%\draw[help lines,style=dashed] ($ (VERT) +(0,0, -6.5) $)  --  ($ (VERT) +(\zs, 0,0)+ (0,0, -6.5) $)  ;
+%\draw[help lines,style=dashed]  ($ (VERT)  + (0,0,6.5) $)  --   ($ (VERT) +(\zs, 0,0)+ (0,0,6.5) $) ;
+
+%%Plane
+%\draw[fill=black!90!white,opacity=0.80] ($ (VERT)+(\zs, 0,0) + (0,\yscale*\plane,\plane) $) -- ($ (VERT)+(\zs, 0,0) + (0,\yscale*\plane,-\plane) $) -- ($ (VERT) +(\zs, 0,0)+ (0,-\yscale*\plane,-\plane) $) -- ($ (VERT) +(\zs, 0,0)+ (0,-\yscale*\plane,\plane) $);
+
+
+%TT projection
+%\draw[thick,color=green][-latex]  ($ (VERT)+(\zs, 0,0)$)  -- ($ (VERT)+(\zs, 0,0) + (0,0, \Xz) $) ;
+%\draw[thick,color=green][-latex]  ($ (VERT)+(\zs, 0,0)$)  -- ($ (VERT)+(\zs, 0,0) +  (0,0, \Yz) $) ;
+
+%FS hadrons
+%\draw[thick,color=white][-latex] ($ (VERT)+(\zs, 0,0)$)  -- ($ (VERT)+(\zs, 0,0) + (0,\Xy, \Xz) $) ;
+%\draw[thick,color=white][-latex] ($ (VERT)+(\zs, 0,0)$)  -- ($ (VERT)+(\zs, 0,0) + (0,\Yy,\Yz) $);
+
+%lepton
+%\draw[thick,-latex,color=white]  ($ (VERT)+(\zs, 0,0)$)  -- ($ (VERT)+(\zs, 0,0) + (0,\ly,0) $);
+
+%double transverse axis
+%\draw[very thin,-latex,color=green,style=dashed] ($ (VERT) +(\zs, 0,0)+ (0,0, -6.5) $) --   ($ (VERT) +(\zs, 0,0)+ (0,0,6.5) $) ;
+
+
+%target
+%\draw[, pattern=,color=green]  ($ (VERT)+(\zs, 0,0)$)  circle (\pr);
+%\draw[white]  ($ (VERT)+(\zs, 0,0)$)  circle (\pr);
+
+\end{tikzpicture}
