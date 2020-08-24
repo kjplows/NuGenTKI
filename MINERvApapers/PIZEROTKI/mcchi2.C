@@ -13,7 +13,7 @@
 
 #include "style.h"
 
-const bool kthin=false;
+const bool kthin=true;
 
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
@@ -370,10 +370,10 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     const double fchi2 = style::GetChi2(hdata, *dataCov, noff, xnbin, hfit, dummyunit);
     printf("Check %s %d %s chi2 %e\n", hfit->GetName(), ii, pi0v.Data(), fchi2);
     if(smc.size()){
-      leghead += Form("  #chi^{2}=%.1f", fchi2);
+      leghead += Form("  #chi^{2}=%.0f", fchi2);
     }
     else{
-      legtag[ii] += Form("  #chi^{2}=%.1f", fchi2);
+      legtag[ii] += Form("  #chi^{2}=%.0f", fchi2);
     }
     delete hfit;
     hfit=0x0;
