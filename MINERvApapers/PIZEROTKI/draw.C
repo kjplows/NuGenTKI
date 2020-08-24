@@ -13,6 +13,8 @@
 
 #include "style.h"
 
+const bool kthin = false;
+
 void setYtitleNorm(TH1D *hist)
 {
   TString ytit = hist->GetYaxis()->GetTitle();
@@ -153,16 +155,16 @@ int draw(const int opt = 0)
   //_________________________________________________________________________________  
 
 
-  const Double_t currentLeft=0.12; 
+  const Double_t currentLeft=kthin?0.17:0.12; 
   const Double_t currentTop=0.08; 
-  const Double_t currentRight=0.037;
+  const Double_t currentRight=kthin?0.045:0.037;
   const Double_t currentBottom=0.17;
 
   const bool kleft = (opt==1 || opt==3 || opt==4);
 
   TCanvas *cc=dynamic_cast<TCanvas *> (gDirectory->Get("cc"));
   if(!cc){
-    cc=new TCanvas("cc","cc",600,400);
+    cc=new TCanvas("cc","cc",kthin?300:600,400);
     style::PadSetup(cc);
 
     //cc->GetCanvas()->SetGrayscale();
@@ -220,7 +222,7 @@ int draw(const int opt = 0)
 
   //const double x0=kleft?0.15:0.7;
   //const double x0=kleft?0.2:0.67;//square
-  const double x0=kleft?0.2:0.6;//square
+  const double x0=kleft?(kthin?0.27:0.2):(kthin?0.5:0.6);//square
 
   TLegend *lg = new TLegend(x0, 0.65, x0+0.34, 0.88);
   lg->SetHeader("MINERvA LE data");
@@ -260,7 +262,7 @@ int draw(const int opt = 0)
 
   lg->Draw();
 
-  TLatex * lt1 = new TLatex(0.15, 0.83, opt==4?"(b)":"(a)");
+  TLatex * lt1 = new TLatex(kthin?0.2:0.15, 0.83, opt==4?"(b)":"(a)");
   style::ResetStyle(lt1, 0.7);
   lt1->Draw();
   
@@ -281,7 +283,7 @@ int main()
   
   style::fgkTextSize = 0.07; //0.05;
   style::fgkTitleSize = 0.07;
-  style::fgkYTitleOffset = 0.75;
+  style::fgkYTitleOffset = kthin?1.08:0.75;
   style::fgkXTitleOffset = 1.1;
 
   vector<int> opts;

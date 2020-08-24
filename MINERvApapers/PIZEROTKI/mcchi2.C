@@ -13,6 +13,8 @@
 
 #include "style.h"
 
+const bool kthin=false;
+
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
   printf("\n\nget MINERvA %s\n\n", pint.Data());
@@ -379,14 +381,14 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
 
   //_________________________________________________________________________________
   //_________________________________________________________________________________  
-  const Double_t currentLeft=0.12; 
+  const Double_t currentLeft=kthin?0.17:0.12; 
   const Double_t currentTop=0.08; 
-  const Double_t currentRight=0.037;
+  const Double_t currentRight=kthin?0.045:0.037;
   const Double_t currentBottom=0.17;
 
   const bool kleft = (opt==1 || opt==3 || opt==4 || opt==8);
 
-  TCanvas *cc=new TCanvas("cc","cc",600,400);
+  TCanvas *cc=new TCanvas("cc","cc",kthin?300:600,400);
   style::PadSetup(cc);
   
   //cc->GetCanvas()->SetGrayscale();
@@ -438,7 +440,7 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
 
   //const double x0=kleft?0.15:0.7;
   //const double x0=kleft?0.14:0.53;//square
-  const double x0=kleft?0.14:(sgen.Contains("gibuu")&&!sgen.Contains("nofsi")?0.7: 0.47);//square
+  const double x0=kleft?(kthin?0.2:0.14):(sgen.Contains("gibuu")&&!sgen.Contains("nofsi")?(kthin?0.6:0.7): (kthin?0.45:0.47));//square
   const double xsize=0.42;
   TLegend *lg = new TLegend(x0, 0.55, x0+xsize, 0.89);
   if(leghead.Length()){
@@ -492,7 +494,7 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   lg->Draw();
   
   if((sgen.Contains("oobgibuu")||sgen.Contains("nuisancenuwro")||sgen.Contains("PRD"))&&pint.Contains("pi0")){
-    const double xsublable = kleft?(opt==4?0.75:0.89):0.15;
+    const double xsublable = kleft?(opt==4?0.75:(kthin?0.8:0.89)):(kthin?0.2:0.15);
     const double ysublable = /*(opt==8&&sgen.Contains("gibuu"))?0.48:*/0.83;
     TLatex * lt1 = new TLatex(xsublable, ysublable, sgen.Contains("gibuu")?"(b)":"(a)");
     style::ResetStyle(lt1);
@@ -512,7 +514,7 @@ int main()
   
   style::fgkTextSize = 0.07; //0.05;
   style::fgkTitleSize = 0.07;
-  style::fgkYTitleOffset = 0.75;
+  style::fgkYTitleOffset = kthin?1.08:0.75;
   style::fgkXTitleOffset = 1.1;
 
   vector<int> opt; 
