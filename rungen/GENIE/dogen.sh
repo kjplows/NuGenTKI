@@ -1,5 +1,12 @@
 date
 
+source ~/setupGENIE.sh
+
+if [ ! -e ${GENIEbase} ]
+then
+    return
+fi
+
 ################################################################################################
 #ii has to be outside the loop
 ii=1
@@ -34,11 +41,12 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
-aaa=v2DC
+aaa=v2TJ
+#v2DC
 #V2RG
 #v3OOB
 model=" --event-generator-list Default+CCMEC"
-jobid=c5${aaa}
+jobid=c6${aaa}
 #x3
 
 GENIETAG="GENIE_${aaa}"
@@ -133,17 +141,16 @@ do
 
                 if [ $beam == ${NUUUU} ]
                 then
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/minerva_flux.root,numu_fhc"
-                    ###energyTerm="-e 0,100 -f /data/t2k/coplowe/flux_files/MINERvAflux2013/numi_flux_nu_fhc.root,flux_E_cvweighted_CV_WithErr"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/minerva_flux.root,numu_fhc"
                 else
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/minerva_flux.root,numubar_rhc"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/minerva_flux.root,numubar_rhc"
                 fi
 
             elif [ $enu == ${MME} ]
             then
                 if [ $beam == ${NUUUU} ]
                 then
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/Unofficial_NumuMEFlux_NueConstrained.root,flux_E_cvweighted_CV_WithStatErr"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/Unofficial_NumuMEFlux_NueConstrained.root,flux_E_cvweighted_CV_WithStatErr"
                 else
                     echo "No MINERvA ME for anti-neutrino!"
                     return
@@ -153,18 +160,18 @@ do
             then
                 if [ $beam == ${NUUUU} ]
                 then
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/T2K/t2kflux_2016_plus250kA.root,enu_nd280_numu"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/T2K/t2kflux_2016_plus250kA.root,enu_nd280_numu"
                 else
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/T2K/t2kflux_2016_minus250kA.root,enu_nd280_numub"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/T2K/t2kflux_2016_minus250kA.root,enu_nd280_numub"
                 fi
 
             elif [ $enu == ${DUNE} ]
             then 
                 if [ $beam == ${NUUUU} ]
                 then
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/DUNE/histos_g4lbne_v3r5p4_QGSP_BERT_OptimizedEngineeredNov2017_neutrino_LBNEND_fastmc.root,numu_flux"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/DUNE/histos_g4lbne_v3r5p4_QGSP_BERT_OptimizedEngineeredNov2017_neutrino_LBNEND_fastmc.root,numu_flux"
                 else
-                    energyTerm="-e 0,100 -f /data/t2k/xlu/software/GENIE/flux/DUNE/histos_g4lbne_v3r5p4_QGSP_BERT_OptimizedEngineeredNov2017_antineutrino_LBNEND_fastmc.root,numubar_flux"
+                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/DUNE/histos_g4lbne_v3r5p4_QGSP_BERT_OptimizedEngineeredNov2017_antineutrino_LBNEND_fastmc.root,numubar_flux"
                 fi
             else            
             
@@ -180,13 +187,13 @@ do
                 nuTerm="-p -14"
             fi
 
-            #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections /data/t2k/xlu/software/GENIE/gxspl.xml -o output${tag}.root --event-generator-list Default+CCMEC > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+            #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${GENIEbase}/gxspl.xml -o output${tag}.root --event-generator-list Default+CCMEC > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
             #for RES there is no 2p2h
             #echo; echo; echo NO MEC!!!; echo; echo; echo
-            #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections /data/t2k/xlu/software/GENIE/gxspl.xml -o output${tag}.root --event-generator-list Default > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+            #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${GENIEbase}/gxspl.xml -o output${tag}.root --event-generator-list Default > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
-             cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f /data/t2k/xlu/software/GENIE/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+             cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
                 
             echo $cmd
             echo
@@ -199,7 +206,7 @@ cd $(pwd)
 
 date
 
-cp \$GENIE/config/UserPhysicsOptions.xml .
+cp ${GENIE}/config/UserPhysicsOptions.xml .
 
 ${cmd}
 
