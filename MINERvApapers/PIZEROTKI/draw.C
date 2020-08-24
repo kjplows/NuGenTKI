@@ -13,7 +13,7 @@
 
 #include "style.h"
 
-const bool kthin = false;
+const bool kthin = true;
 
 void setYtitleNorm(TH1D *hist)
 {
