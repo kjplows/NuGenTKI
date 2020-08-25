@@ -13,7 +13,7 @@
 
 #include "style.h"
 
-const bool kthin=true;
+const bool kthin=false;
 
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
@@ -269,6 +269,19 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     filetag.push_back("");
 
     leghead="GENIE v2.12.10-RG";
+    histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
+    legtag.push_back("");
+  }
+  else if(sgen=="geniev2TJ"){
+    if(pint=="0pi"){
+      filehead = "data/GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly";
+    }
+    else if(pint=="pi0"){
+      filehead = "data/GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly";
+    }
+    filetag.push_back("");
+
+    leghead="GENIE v2.12.10-TJ";
     histname = filehead(filehead.First("/")+1, 1000)+"/"+varname[ivar];
     legtag.push_back("");
   }
@@ -529,11 +542,14 @@ int main()
   opt.push_back(8);
 
   vector<TString> sgen;
+  /*
   sgen.push_back("PRD");
   sgen.push_back("oobgibuu");
   sgen.push_back("geniev3oob");
   sgen.push_back("geniev2DC");
   sgen.push_back("genieV2RG");
+  */
+  sgen.push_back("geniev2TJ");
   //sgen.push_back("oobnofsigibuu");
   //sgen.push_back("nuisancenuwro");
   //sgen.push_back("nuisancegenie");
