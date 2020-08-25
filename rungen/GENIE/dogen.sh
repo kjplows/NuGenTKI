@@ -51,13 +51,14 @@ jobid=c6${aaa}
 
 GENIETAG="GENIE_${aaa}"
 
-nevt=100000
+nevt=200000
+#100000
 #1000
 #5000
 #100000
 #10000
 
-for imultiple in $( seq 1 10) 
+for imultiple in $( seq 1 5) 
 #$( seq 1 100 ) 
 #$( seq 1 300 ) 
 #$( seq 1 1000 )  

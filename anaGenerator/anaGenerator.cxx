@@ -56,7 +56,7 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
     hCCrate->Fill(tmpenu);
 
     const int tmpevent = EvtNum;
-    const int tmpprod= abs(G2NeutEvtCode);
+    const int tmpprod= -999;//not needing G2NeutEvtCode anymore, no need to modify GENIE code; abs(G2NeutEvtCode);
     const double tmppw = 1;//to-do EvtXSec;
 
     const int tmpnp = StdHepN;

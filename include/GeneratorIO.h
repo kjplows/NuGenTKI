@@ -402,7 +402,7 @@ void GENIESetID(const int pdg, const double tmptote)
      ( tmppdg == 22 || tmppdg == 11 ) ||
      ( tmppdg > 3000 && tmppdg < 5000 )
      //diquark !
-     || ( tmppdg == 2103 )
+     || ( tmppdg == 2103 ) || ( tmppdg == 2203 )
       ){
     lineIsBkgParticle = true;
   }

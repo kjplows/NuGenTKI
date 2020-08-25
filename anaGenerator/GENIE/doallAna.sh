@@ -1,9 +1,10 @@
-export GFSa9nuCH="list/Filelist_GENIE_v2DC_BeamNu_EnuMINERvA_TargetCarbon.list"
+export GFS0PIa9nuCH="list/Filelist_GENIE_v2TJ_BeamNu_EnuMINERvA_TargetCarbon.list"
+#"list/Filelist_GENIE_v2DC_BeamNu_EnuMINERvA_TargetCarbon.list"
 #"list/Filelist_GENIE_v3OOB_BeamNu_EnuMINERvA_TargetCarbon.list"
 #"list/Filelist_GENIE_V2RG_BeamNu_EnuMINERvA_TargetCarbon.list"
-export GFSPIZEROa7nuCH=${GFSa9nuCH}
+export GFSPIZEROa7nuCH=${GFS0PIa9nuCH}
 
-export LOWRECOILa1nuCH=${GFSa9nuCH}
+export LOWRECOILa1nuCH=${GFS0PIa9nuCH}
 
 export LOWRECOILa1nubarCH=
 
@@ -22,7 +23,8 @@ export NUGASa8nubar=
 ntostop=
 #10000000
 
-tag=MINERvAGENIE_v2DC_LE_
+tag=MINERvAGENIE_v2TJ_LE_
+#MINERvAGENIE_v2DC_LE_
 #MINERvAGENIE_v3OOB_LE_
 #MINERvAGENIE_V2RG_LE_
 
@@ -33,7 +35,7 @@ mkexe.sh anaGenerator -I${NUGENTKI}/include
 #exit
 
 #GFS 9 : 0PI
-opt=${tag}GFSa9nuCH;          nohup ./doAna.sh $GFSa9nuCH          ${opt} 9 ${ntostop} > see${opt}.log &
+opt=${tag}GFS0PIa9nuCH;          nohup ./doAna.sh $GFS0PIa9nuCH          ${opt} 9 ${ntostop} > see${opt}.log &
 
 #exit
 

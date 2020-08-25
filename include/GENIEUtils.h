@@ -45,8 +45,11 @@ TF1* GENIEgetCCSpline(const int nuPDG, const int targetA)
     if(!sp){
       printf("initiating spline for nuPDG %d targetA %d\n", nuPDG, targetA);
 
-      const TString splineFileName("/data/t2k/xlu/software/GENIE/inuse/spline/xsec_graphs.root");
-      ///data/t2k/xlu/software/GENIE_v3_00_06/genie_xsec/v3_00_04a/NULL/G1802a00000-k250-e1000/data/xsec_graphs.root");
+      const TString myGENIE = gSystem->Getenv("myGENIE");
+      if(myGENIE==""){
+        printf("no myGENIE!\n"); exit(1);
+      }
+      const TString splineFileName = myGENIE+"/spline/xsec_graphs.root";
       TFile splineFile(splineFileName);
       if(splineFile.IsZombie()){
         cerr << "Can't find GENIE spline file at:" << endl;

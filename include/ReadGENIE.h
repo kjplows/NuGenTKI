@@ -11,7 +11,7 @@ namespace ReadGENIE
   // Declaration of leaf types                                                                                                                                                                                                                                       
   TObjString      *gEvtCode;
 
-  Int_t           G2NeutEvtCode;
+  //Int_t           G2NeutEvtCode;
   Int_t           EvtNum;
   Double_t        EvtXSec;
   Double_t        EvtDXSec;
@@ -36,7 +36,7 @@ namespace ReadGENIE
   // List of branches                                                                                                                                                                                                                                                
   TBranch        *b_gEvtCode;
 
-  TBranch        *b_G2NeutEvtCode;
+  //TBranch        *b_G2NeutEvtCode;
   TBranch        *b_EvtNum;
   TBranch        *b_EvtXSec;
   TBranch        *b_EvtDXSec;
@@ -66,7 +66,7 @@ void SetChain(TChain *ch)
 
   ch->SetBranchAddress("EvtCode", &gEvtCode, &b_gEvtCode);
 
-  ch->SetBranchAddress("G2NeutEvtCode", &G2NeutEvtCode, &b_G2NeutEvtCode);
+  //ch->SetBranchAddress("G2NeutEvtCode", &G2NeutEvtCode, &b_G2NeutEvtCode);
   ch->SetBranchAddress("EvtNum", &EvtNum, &b_EvtNum);
   ch->SetBranchAddress("EvtXSec", &EvtXSec, &b_EvtXSec);
   ch->SetBranchAddress("EvtDXSec", &EvtDXSec, &b_EvtDXSec);
