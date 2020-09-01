@@ -41,17 +41,20 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
-aaa=v2TJ
+aaa=V3test
+#v2TJ
 #v2DC
 #V2RG
 #v3OOB
 model=" --event-generator-list Default+CCMEC"
-jobid=c6${aaa}
+jobid=d1${aaa}
+#c6${aaa}
 #x3
 
 GENIETAG="GENIE_${aaa}"
 
-nevt=200000
+nevt=10
+#200000
 #100000
 #1000
 #5000
