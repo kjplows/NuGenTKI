@@ -1,1 +1,1 @@
-../DUNEprotoTKI/anaData/AnaFunctions.h
+../TKI/include/AnaFunctions.h
