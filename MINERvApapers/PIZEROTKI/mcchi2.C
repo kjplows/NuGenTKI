@@ -20,7 +20,8 @@ TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
   printf("\n\nget MINERvA %s\n\n", pint.Data());
   TFile *fin = 0x0;
   if(pint=="0pi"){
-    fin = new TFile("data/MINERvA_1805.05486_v3.root");//official_release_data_fullCov_deelastic
+    fin = new TFile("data/PhysRevD.101.092001.root");
+    //fin = new TFile("data/MINERvA_1805.05486_v3.root");//official_release_data_fullCov_deelastic
     //fin = new TFile("data/MINERvA_1805.05486_v2.root");//CC0piTKI_MINERvAPRL/official_release_data_fullCov
   }
   else if(pint=="pi0"){
@@ -542,14 +543,13 @@ int main()
   opt.push_back(8);
 
   vector<TString> sgen;
-  /*
+
   sgen.push_back("PRD");
   sgen.push_back("oobgibuu");
-  sgen.push_back("geniev3oob");
-  sgen.push_back("geniev2DC");
-  sgen.push_back("genieV2RG");
-  */
-  sgen.push_back("geniev2TJ");
+  //sgen.push_back("geniev3oob");
+  //sgen.push_back("geniev2DC");
+  //sgen.push_back("genieV2RG");
+  //sgen.push_back("geniev2TJ");
   //sgen.push_back("oobnofsigibuu");
   //sgen.push_back("nuisancenuwro");
   //sgen.push_back("nuisancegenie");

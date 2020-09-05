@@ -32,8 +32,9 @@ TH1D *getMINERvA0PI(const TString varname, TMatrixD *& cov)
 {
   printf("\n\nget MINERvA 0PI\n\n");
   //TFile *fdata=new TFile("data/CC0piTKI_MINERvAPRL/official_release_data_fullCov/MINERvA_1805.05486_v2.root");
-  TFile *fdata=new TFile("data/CC0piTKI_MINERvAPRL/official_release_data_fullCov_deelastic/MINERvA_1805.05486_v3.root");
-
+  //TFile *fdata=new TFile("data/CC0piTKI_MINERvAPRL/official_release_data_fullCov_deelastic/MINERvA_1805.05486_v3.root");
+  TFile *fdata=new TFile("data/PhysRevD.101.092001.root");
+ 
   TH1D * hh  = (TH1D*) ((TList*)fdata->Get(varname))->At(0);      
   if(!hh){
     cout<<"no 0pi hist! "<<varname<<endl; exit(1);
