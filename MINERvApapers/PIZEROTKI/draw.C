@@ -289,8 +289,8 @@ int main()
 
   vector<int> opts;
   opts.push_back(4);
-  opts.push_back(5);
-  opts.push_back(6);
+  //opts.push_back(5);
+  //opts.push_back(6);
   opts.push_back(7);
   for(unsigned ii=0; ii<opts.size(); ii++){
     draw(opts[ii]);
