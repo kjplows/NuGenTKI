@@ -13,7 +13,7 @@
 
 #include "style.h"
 
-const bool kthin=false;
+const bool kthin=true;//false;
 
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
