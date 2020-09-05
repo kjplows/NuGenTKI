@@ -544,9 +544,9 @@ int main()
 
   vector<TString> sgen;
 
-  sgen.push_back("PRD");
-  sgen.push_back("oobgibuu");
-  //sgen.push_back("geniev3oob");
+  //sgen.push_back("PRD");
+  //sgen.push_back("oobgibuu");
+  sgen.push_back("geniev3oob");
   //sgen.push_back("geniev2DC");
   //sgen.push_back("genieV2RG");
   //sgen.push_back("geniev2TJ");
