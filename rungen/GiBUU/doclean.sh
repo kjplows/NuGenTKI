@@ -1,6 +1,6 @@
 mkdir -p bad
 
-for ii in test_DUNE_nu*
+for ii in GiBUU*
 do
     jj=$(head -n 1 $ii/FinalEvents.dat)bb
 
@@ -11,7 +11,7 @@ do
     fi
 done
 
-for ii in test_DUNE_nu*
+for ii in GiBUU*
 do 
     #jj=$(grep "BUU simulation: finished" $ii/see*.log)bb 
 

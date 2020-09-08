@@ -1,6 +1,7 @@
 export GFS0PIa9nuH=
 #"list/GiBUUMINERvA_LE_Neutrino_more_ensembles_H_Hydrogen_1000files.list"
-export GFS0PIa9nuC="list/GiBUUMINERvA_LE_Neutrino_more_ensembles_Carbon_250files.list"
+export GFS0PIa9nuC='list/Filelist_GiBUUMINERvALE_nu_T0_Carbon.list'
+#"list/GiBUUMINERvA_LE_Neutrino_more_ensembles_Carbon_250files.list"
 export GFS0PIa9nuNOFSIC=
 #"list/GiBUUMINERvA_LE_Neutrino_NoFSI_Carbon_250files.list"
 
@@ -29,7 +30,8 @@ export NUGASa8P50=
 
 nfile=
 
-tag=MINERvAGiBUU_LE_
+tag=MINERvALE_GiBUU_test_
+#MINERvAGiBUU_LE_
 #MINERvAGiBUU_PIZEROrep_${nfile}_
 #DUNEGiBUU_${nfile}_
 #MINERvAGiBUU_protectedBkg_${nfile}_
