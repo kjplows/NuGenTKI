@@ -208,9 +208,11 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   }
   else if(sgen=="oobgibuu"){
     if(pint=="0pi"){
+      //filehead = "data/MINERvALEGiBUUGFS0PIa9t1nuCarbon";
       filehead = "data/GFS0PIMINERvAGiBUULE_CarbonOnly";
     }
     else if(pint=="pi0"){
+      //filehead = "data/MINERvALEGiBUUGFSPIZEROa7t4nuCarbon";
       filehead = "data/GFSPIZEROMINERvAGiBUULE_CarbonOnly";
     }
     filetag.push_back("");
@@ -545,8 +547,8 @@ int main()
   vector<TString> sgen;
 
   //sgen.push_back("PRD");
-  //sgen.push_back("oobgibuu");
-  sgen.push_back("geniev3oob");
+  sgen.push_back("oobgibuu");
+  //sgen.push_back("geniev3oob");
   //sgen.push_back("geniev2DC");
   //sgen.push_back("genieV2RG");
   //sgen.push_back("geniev2TJ");
