@@ -1,5 +1,9 @@
 # NuGenTKI
+  ## Documentation of source codes
+   http://www-pnp.physics.ox.ac.uk/~luxi/transport/doxygen/NuGenTKI
 
+  ## Quick how-to
+  
 style/, bin/, and include/AnaFunctions.h are from submodule TKI. Need to load/update separately with
    ```
    git submodule update --init
