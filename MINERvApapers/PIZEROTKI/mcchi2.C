@@ -13,7 +13,7 @@
 
 #include "style.h"
 
-const bool kthin=true;//false;
+const bool kthin=false;//true;//
 
 TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
 {
@@ -546,7 +546,7 @@ int main()
 
   vector<TString> sgen;
 
-  //sgen.push_back("PRD");
+  sgen.push_back("PRD");
   sgen.push_back("oobgibuu");
   //sgen.push_back("geniev3oob");
   //sgen.push_back("geniev2DC");
