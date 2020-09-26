@@ -513,7 +513,7 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
     const double xsublable = kleft?(opt==4?0.75:(kthin?0.8:0.89)):(kthin?0.2:0.15);
     const double ysublable = /*(opt==8&&sgen.Contains("gibuu"))?0.48:*/0.83;
     TLatex * lt1 = 0x0;
-    if(opt==4){
+    if(opt==4 && kthin){
       lt1= new TLatex(xsublable, ysublable, sgen.Contains("gibuu")?"(d)":"(c)");
     }
     else{
