@@ -45,7 +45,7 @@
 %%Plane ++, +-, --, -+ width = 1.05+1.5 = 2.55, height 1.8+0.75 = 2.55
 \draw[fill=black!90!white,opacity=0.00] ($ (VERT) + (1.05*\plane,1.7*\plane,0) $) -- ($ (VERT) + (1.05*\plane,-0.55*\plane,0) $) -- ($ (VERT) + (-1.5*\plane,-1.825*\plane,0) $) -- ($ (VERT) + (-1.5*\plane,0.425*\plane,0) $);
 
-\draw node [color=black, above right = 4.05 cm and -0.2 cm] {(b)};
+%\draw node [color=black, above right = 4.05 cm and -0.2 cm] {(b)};
 
 %FS hadrons
 \draw[thick,color=blue][-latex] (VERT) -- ($ (VERT) + (\Xx,\Xy, \Xz) $) node [ right = 0.1cm] {$\vec{p}_\textrm{p}$};
