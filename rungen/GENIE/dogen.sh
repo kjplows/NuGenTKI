@@ -46,8 +46,8 @@ aaa=V3test
 #v2DC
 #V2RG
 #v3OOB
-model=" --event-generator-list Default+CCMEC"
-jobid=d1${aaa}
+model=" --event-generator-list Default+CCMEC --tune G18_10b_00_000 "
+jobid=f1${aaa}
 #c6${aaa}
 #x3
 
@@ -61,7 +61,8 @@ nevt=10
 #100000
 #10000
 
-for imultiple in $( seq 1 5) 
+for imultiple in $( seq 1 2) 
+#$( seq 1 5) 
 #$( seq 1 100 ) 
 #$( seq 1 300 ) 
 #$( seq 1 1000 )  
@@ -197,7 +198,9 @@ do
             #echo; echo; echo NO MEC!!!; echo; echo; echo
             #cmd="gevgen -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${GENIEbase}/gxspl.xml -o output${tag}.root --event-generator-list Default > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
-             cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+            #cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+
+            cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
                 
             echo $cmd
             echo
@@ -210,7 +213,7 @@ cd $(pwd)
 
 date
 
-cp ${GENIE}/config/UserPhysicsOptions.xml .
+#cp ${GENIE}/config/UserPhysicsOptions.xml .
 
 ${cmd}
 
