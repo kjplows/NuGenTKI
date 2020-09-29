@@ -49,7 +49,12 @@ TF1* GENIEgetCCSpline(const int nuPDG, const int targetA)
       if(myGENIE==""){
         printf("no myGENIE!\n"); exit(1);
       }
-      const TString splineFileName = myGENIE+"/spline/xsec_graphs.root";
+      //const TString splineFileName = myGENIE+"/spline/xsec_graphs.root";
+      const TString splineFileName = "list/xsec_graphs.root";
+      cout<<"\n\nGENIEUtils GENIEgetCCSpline using local spline "<<splineFileName;
+      gSystem->Exec(Form("readlink -f %s", splineFileName.Data()));
+      cout<<"\n\n";
+
       TFile splineFile(splineFileName);
       if(splineFile.IsZombie()){
         cerr << "Can't find GENIE spline file at:" << endl;

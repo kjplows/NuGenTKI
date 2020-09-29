@@ -67,15 +67,18 @@ aaa=V3test
 #V2RG
 #v3OOB
 
-jobid=f2${aaa}
+jobid=g1${aaa}
 
 GENIETAG="GENIE_${aaa}_Tune${tuneTag}"
 
-nevt=10
+nevt=20000
 #200000
+#10
+#
 
-for imultiple in $( seq 1 2) 
-#$( seq 1 5) 
+for imultiple in $( seq 1 5) 
+#$( seq 1 2) 
+#
 do
     for enu in ${MINERVA_LE} 
 #${DUNE}
@@ -208,7 +211,8 @@ do
 
             #cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
-            cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
+            #cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
+            cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
                 
             echo $cmd
             echo
