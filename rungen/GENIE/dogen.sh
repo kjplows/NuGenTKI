@@ -41,31 +41,41 @@ NUUUU="Nu"
 NUBAR="Nubar"
 
 ################################################################################################
+tuneTag=G18_10b_00_000
+#G18_02a_00_000
+#G18_10b_00_000
+tmpGENIEtune=$(echo $tuneTag|tr -d '_')
+splineroot=$(readlink -f $(find ${GENIEspline}| grep $tmpGENIEtune | grep .root))
+splinefile=$(readlink -f $(find ${GENIEspline}| grep $tmpGENIEtune | grep small))
+echo tuneTag $tuneTag
+echo tmpGENIEtune $tmpGENIEtune
+echo GENIEspline $GENIEspline
+echo splineroot $splineroot
+echo splinefile $splinefile
+
+if [ -z ${splinefile} ]
+then
+    echo null splinefile!!
+    exit
+fi
+
+model=" --event-generator-list Default+CCMEC "
+
 aaa=V3test
 #v2TJ
 #v2DC
 #V2RG
 #v3OOB
-model=" --event-generator-list Default+CCMEC --tune G18_10b_00_000 "
-jobid=f1${aaa}
-#c6${aaa}
-#x3
 
-GENIETAG="GENIE_${aaa}"
+jobid=f2${aaa}
+
+GENIETAG="GENIE_${aaa}_Tune${tuneTag}"
 
 nevt=10
 #200000
-#100000
-#1000
-#5000
-#100000
-#10000
 
 for imultiple in $( seq 1 2) 
 #$( seq 1 5) 
-#$( seq 1 100 ) 
-#$( seq 1 300 ) 
-#$( seq 1 1000 )  
 do
     for enu in ${MINERVA_LE} 
 #${DUNE}
@@ -78,8 +88,6 @@ do
 
         for beam in $NUUUU 
 #$NUBAR
-#
-#
         do
 
         for target in Carbon
@@ -200,7 +208,7 @@ do
 
             #cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
-            cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
+            cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
                 
             echo $cmd
             echo
