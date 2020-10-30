@@ -1,4 +1,4 @@
-void getStack2(const TString fin, const TString anaid, const TString tag, const TString var)
+void getStack(const TString fin, const TString anaid, const TString tag, const TString var)
 {
   const TString dir= ("outStack/"+anaid);
   gSystem->Exec("mkdir -p "+dir);
