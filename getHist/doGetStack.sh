@@ -1,6 +1,7 @@
 dir0=$(pwd)
 
-for anaid in MINERvALEGiBUUGFS0PIa9t1nuCarbon MINERvALEGiBUUGFSPIZEROa7t4nuCarbon
+for anaid in MINERvAGENIEGFSa0t4nuCarbon
+#MINERvALEGiBUUGFS0PIa9t1nuCarbon MINERvALEGiBUUGFSPIZEROa7t4nuCarbon
 #MINERvAGENIEGFSPIZEROa7t4nuCarbon MINERvAGENIEGFS0PIa9t1nuCarbon
 #GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly
 #GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly GFS0PIMINERvAGENIE_v2DC_LE_CarbonOnly
@@ -36,14 +37,14 @@ do
     echo tag $tag
     echo
 
-    commonVar="enu muonmomentum muontheta Q2 xBj xrest Wtrue Wrest "
+    commonVar="enu muonmomentum muontheta muonmomentumVStheta Q2 xBj xrest Wtrue Wrest "
 
     if [  $anaid == GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFS0PIa9t1nuCarbon  -o $anaid == MINERvALEGiBUUGFS0PIa9t1nuCarbon ]
     then
         varray=${commonVar}" protonmomentum protontheta dpt dphit dalphat neutronmomentum"
-    elif [ $anaid == GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFSPIZEROa7t4nuCarbon -o $anaid == MINERvALEGiBUUGFSPIZEROa7t4nuCarbon ]
+    elif [ $anaid == GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFSPIZEROa7t4nuCarbon -o $anaid == MINERvALEGiBUUGFSPIZEROa7t4nuCarbon -o $anaid == MINERvAGENIEGFSa0t2nuCarbon -o $anaid == MINERvALEGiBUUGFSa0t2nuCarbon -o $anaid == MINERvAGENIEGFSa0t4nuCarbon ]
     then
-        varray=${commonVar}" protonmomentum protontheta pionmomentum piontheta pionEk baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT "
+        varray=${commonVar}" protonmomentum protontheta protonmomentumVStheta pionmomentum piontheta pionmomentumVStheta pionEk baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT "
 
     elif [  $anaid == DUNEEXCL3_CH ]                                                                                           
     then                                                                                                                       
@@ -90,5 +91,4 @@ then
 fi
 
 done
-
 
