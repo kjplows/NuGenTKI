@@ -34,6 +34,13 @@ namespace HistIO
   TH1D * hprotonmomentum = 0x0,* hprotontheta = 0x0, * hpionmomentum = 0x0, * hpiontheta = 0x0, * hpionEk =0x0, * hbaryonmomentum=0x0, * hbaryontheta=0x0, * hbaryonmass=0x0;
   TH1D * hdpt = 0x0, * hdphit = 0x0, * hdalphat = 0x0, * hneutronmomentum = 0x0, * hdpTT = 0x0;
 
+  //correlation plots: muon proton and pion theta vs momentum
+  //raw histos here
+  TH2D * hmuonmomentumVStheta = 0x0;
+  TH2D * hprotonmomentumVStheta = 0x0;
+  TH2D * hpionmomentumVStheta = 0x0;
+  //normalised histos here
+
 #if __OPENCLR__
   double RESmass, adlerPhi, lrsign, w2;
   double pseudoPhi, pseudosign, wpseudo2;
@@ -123,6 +130,7 @@ void FillTopoTaskHist()
 #if __OPENCALC__ 
   hmuonmomentum->Fill(muonmomentum,perweight);
   hmuontheta->Fill(muontheta,perweight);
+  hmuonmomentumVStheta->Fill(muonmomentum,muontheta,perweight);
 
   hQ2->Fill(Q2,perweight);
   hxBj->Fill(xBj,perweight);
@@ -130,8 +138,10 @@ void FillTopoTaskHist()
   
   hprotonmomentum->Fill(protonmomentum,perweight);
   hprotontheta->Fill(protontheta,perweight);  
+  hprotonmomentumVStheta->Fill(protonmomentum,protontheta,perweight);
   hpionmomentum->Fill(pionmomentum,perweight);
   hpiontheta->Fill(piontheta,perweight);
+  hpionmomentumVStheta->Fill(pionmomentum,piontheta,perweight);
   hpionEk->Fill(pionEk,perweight);
   hbaryonmomentum->Fill(baryonmomentum,perweight);
   hbaryontheta->Fill(baryontheta,perweight);
@@ -142,6 +152,7 @@ void FillTopoTaskHist()
   hdalphat->Fill(dalphat,perweight);
   hneutronmomentum->Fill(neutronmomentum,perweight);
   hdpTT->Fill(dpTT,perweight);
+
 #endif
 
 #if __OPENCLR__
@@ -212,13 +223,32 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
       hmuonmomentum = new TH1D("muonmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hmuonmomentum);
       hmuontheta = new TH1D("muontheta"+tag,"", 360, 0, 180); lout->Add(hmuontheta);
+      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hmuonmomentumVStheta);
     }
+    //no cuts mode is OFF for now
+    else if(anaid==CC0piNpID || anaid==CC1piNpID || anaid==CCMpiNpID){
+      //muon momentum cuts between 1.5 and 10 GeV
+      const double Abin[]={0, 0.25, 0.5, 0.75, 1, 1.25, 1.500000, 2.250000, 2.500000, 2.750000, 3.000000, 3.250000, 3.500000, 3.750000, 4.000000, 4.250000, 4.500000, 4.750000, 5.000000, 5.250000, 5.500000, 5.750000, 6.000000, 6.250000, 6.500000, 6.750000, 7.000000, 7.250000, 7.500000, 7.750000, 8.000000, 8.250000, 8.500000, 8.750000, 9.000000, 9.250000, 9.500000, 9.750000, 10.000000}; 
+      hmuonmomentum = new TH1D("muonmomentum"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin); lout->Add(hmuonmomentum);
+
+      // muon theta cuts to 25 degs (20 for 0pi and pi-plus)
+      const double Bbin[]={0.000000, 0.5, 1., 1.5, 2.000000, 2.5, 3.000000, 3.5, 4.000000, 4.5, 5.000000, 5.5, 6.000000, 6.5, 7.000000, 7.5, 8.000000, 8.5, 9.000000, 9.5, 10.000000, 10.5, 11.000000, 11.5, 12.000000, 12.5, 13.000000, 13.5, 14.000000, 14.5, 15.000000, 15.5, 16.000000, 16.5, 17.000000, 17.5, 18.000000, 18.5, 19.000000, 19.5, 20.000000, 20.5, 21., 21.5, 22, 22.5, 23., 23.5, 24., 24.5, 25., 25.5, 26.};
+    
+      hmuontheta = new TH1D("muontheta"+tag,"", sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuontheta);
+
+      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin, sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuonmomentumVStheta);
+    }
+    
     else{
       const double Abin[]={0, 0.25, 0.5, 0.75, 1, 1.25, 1.500000, 2.250000, 2.500000, 2.750000, 3.000000, 3.250000, 3.500000, 3.750000, 4.000000, 4.250000, 4.500000, 4.750000, 5.000000, 5.250000, 5.500000, 5.750000, 6.000000, 6.250000, 6.500000, 6.750000, 7.000000, 7.250000, 7.500000, 7.750000, 8.000000, 8.250000, 8.500000, 8.750000, 9.000000, 9.250000, 9.500000, 9.750000, 10.000000}; 
       hmuonmomentum = new TH1D("muonmomentum"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin); lout->Add(hmuonmomentum); 
+      //hmuonmomentum = new TH1D("muonmomentum"+tag,"", 200, 0, 20.); lout->Add(hmuonmomentum);
       
       const double Bbin[]={0.000000, 2.000000, 3.000000, 4.000000, 5.000000, 6.000000, 7.000000, 8.000000, 9.000000, 10.000000, 11.000000, 12.000000, 13.000000, 14.000000, 15.000000, 16.000000, 17.000000, 18.000000, 19.000000, 20.000000, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130};
       hmuontheta = new TH1D("muontheta"+tag,"", sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuontheta);
+      //hmuontheta = new TH1D("muontheta"+tag,"", 360, 0, 180); lout->Add(hmuontheta);
+
+      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin, sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuonmomentumVStheta);
     }
     henu  = new TH1D("enu"+tag,"", 60, 0, 20); lout->Add(henu);
   }
@@ -242,16 +272,22 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       hprotonmomentum = new TH1D("protonmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hprotonmomentum);
     }
     else{
-      const double Cbin[]={0.3, 0.35, 0.4, 0.450000, 0.600000, 0.625000, 0.650000, 0.675000, 0.700000, 0.725000, 0.750000, 0.775000, 0.800000, 0.825000, 0.850000, 0.875000, 0.900000, 0.925000, 0.950000, 0.975000, 1.000000, 1.025000, 1.050000, 1.075000, 1.100000, 1.125000, 1.150000, 1.175000, 1.200000}; 
-      hprotonmomentum = new TH1D("protonmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hprotonmomentum);
+      //const double Cbin[]={0.3, 0.35, 0.4, 0.450000, 0.600000, 0.625000, 0.650000, 0.675000, 0.700000, 0.725000, 0.750000, 0.775000, 0.800000, 0.825000, 0.850000, 0.875000, 0.900000, 0.925000, 0.950000, 0.975000, 1.000000, 1.025000, 1.050000, 1.075000, 1.100000, 1.125000, 1.150000, 1.175000, 1.200000}; 
+      //hprotonmomentum = new TH1D("protonmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hprotonmomentum);
+      hprotonmomentum = new TH1D("protonmomentum"+tag,"",60, 0, 3.);
     }
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
+      const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
+
       hprotontheta = new TH1D("protontheta"+tag,"", 360, 0, 180); lout->Add(hprotontheta);
+      hprotonmomentumVStheta = new TH2D("protonmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hprotonmomentumVStheta);
     }
     else{
       const double Dbin[]={0.000000, 7.500000, 10.000000, 12.500000, 15.000000, 17.500000, 20.000000, 22.500000, 25.000000, 27.500000, 30.000000, 32.500000, 35.000000, 37.500000, 40.000000, 42.500000, 45.000000, 47.500000, 50.000000, 52.500000, 55.000000, 57.500000, 60.000000, 62.500000, 65.000000, 67.500000, 70.000000}; 
       hprotontheta = new TH1D("protontheta"+tag,"", sizeof(Dbin)/sizeof(double)-1, Dbin); lout->Add(hprotontheta);
+      hprotonmomentumVStheta = new TH2D("protonmomentumVStheta"+tag,"", 60, 0, 3., sizeof(Dbin)/sizeof(double)-1, Dbin); lout->Add(hprotonmomentumVStheta);
+      //hprotontheta = new TH1D("protontheta"+tag,"", 360, 0, 180); lout->Add(hprotontheta);
     }
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
@@ -259,20 +295,34 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       hpionmomentum = new TH1D("pionmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hpionmomentum);
     }
     else{
-      hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0, 1); lout->Add(hpionmomentum);
+      //hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0, 1); lout->Add(hpionmomentum);
+      hpionmomentum = new TH1D("pionmomentum"+tag,"", 240, 0., 6.); lout->Add(hpionmomentum); //changed max momentum to 6 GeV/c.
+      // good for pizero and 0pi, too broad for pi-plus (below)
+      //hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0.1, 0.55); lout->Add(hpionmomentum);
+      //nocuts mode is ON so go with the 25 MeV/c bins!
     }
 
-    hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk);
+    //hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk); //binwidth = 12.5 MeV/bin
+    //pion at 2 GeV/c has ~ 1.87 GeV KE ==> ~150 bins
+    hpionEk = new TH1D("pionEk"+tag,"",470,0,5.86); lout->Add(hpionEk);
+    //pi-plus below, cut 75 MeV <= Ek <= 400 MeV //NOT YET JOHN
+    //hpionEk = new TH1D("pionEk"+tag,"", 40, 0.075, 0.4); lout->Add(hpionEk);
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
+      const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
+
       hpiontheta = new TH1D("piontheta"+tag,"", 360, 0, 180); lout->Add(hpiontheta);
+      hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hpionmomentumVStheta);
     }
     else{
-      hpiontheta = new TH1D("piontheta"+tag,"", 35, 0, 70); lout->Add(hpiontheta);
+      //hpiontheta = new TH1D("piontheta"+tag,"", 35, 0, 70); lout->Add(hpiontheta);
+      hpiontheta = new TH1D("piontheta"+tag,"",36,0,180); lout->Add(hpiontheta);
+      hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", 240, 0, 6., 36, 0, 180); lout->Add(hpionmomentumVStheta);
     }
     
     hbaryonmomentum = new TH1D("baryonmomentum"+tag,"", 30, 0.2, 6); lout->Add(hbaryonmomentum);
     hbaryontheta = new TH1D("baryontheta"+tag,"", 35, 0, 70); lout->Add(hbaryontheta);
+    //hbaryontheta  =new TH1D("baryontheta"+tag,"", 360, 0, 180); lout->Add(hbaryontheta);
     hbaryonmass = new TH1D("baryonmass"+tag,"", 60, 0, 3); lout->Add(hbaryonmass);
 
     if(nuExp=="MINERvA" || nuExp=="NONE" || nuExp=="DUNE"){
@@ -291,10 +341,13 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
           const double Ebin0p[]= {0.000000, 20.000000, 40.000000, 60.000000, 80.000000, 100.000000, 120.000000, 130.000000, 140.000000, 150.000000, 160.000000, 170.000000, 180.000000};
           hdalphat = new TH1D("dalphat"+tag,"", sizeof(Ebin0p)/sizeof(double)-1, Ebin0p); 
         }
-        else if(anaid==CC1piNpID || anaid == CCMpiNpID){
+	/* else if(anaid==CC1piNpID) || anaid == CCMpiNpID){
           const double Ebin1p[]= {0.0000,20.0000,40.0000,60.0000,80.0000,100.0000,120.0000,140.0000,160.0000,180.0000};//pi0TKI binning
           hdalphat = new TH1D("dalphat"+tag,"", sizeof(Ebin1p)/sizeof(double)-1, Ebin1p); 
-        }
+	  } */ //rebinning dalphat for now
+	else if(anaid==CC1piNpID || anaid==CCMpiNpID){
+	  hdalphat = new TH1D("dalphat"+tag,"", 36, 0., 180.);
+	}
         
         const double Fbin[]={0.000000, 2.500000, 5.000000, 7.500000, 10.000000, 12.500000, 15.000000, 17.500000, 20.000000, 22.500000, 25.000000, 27.500000, 30.000000, 35.000000, 40.000000, 45.000000, 50.000000, 55.000000, 60.000000, 70.000000, 85.000000, 105.000000, 130.000000, 180.000000};
         hdphit = new TH1D("dphit"+tag,"", sizeof(Fbin)/sizeof(double)-1, Fbin);
@@ -307,8 +360,9 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
           hneutronmomentum = new TH1D("neutronmomentum"+tag,"", sizeof(Hbin0p)/sizeof(double)-1, Hbin0p); lout->Add(hneutronmomentum);
         }
         else if(anaid==CC1piNpID || anaid == CCMpiNpID){
-          const double Hbin1p[]={0,0.055,0.11,0.165,0.22,0.275,0.33,0.385,0.44,0.495,0.56,0.655,0.81};
-          hneutronmomentum = new TH1D("neutronmomentum"+tag,"", sizeof(Hbin1p)/sizeof(double)-1, Hbin1p); lout->Add(hneutronmomentum);
+          //const double Hbin1p[]={0,0.055,0.11,0.165,0.22,0.275,0.33,0.385,0.44,0.495,0.56,0.655,0.81};
+          //hneutronmomentum = new TH1D("neutronmomentum"+tag,"", sizeof(Hbin1p)/sizeof(double)-1, Hbin1p); lout->Add(hneutronmomentum);
+	  hneutronmomentum = new TH1D("neutronmomentum"+tag,"", 100, 0, 1.); lout->Add(hneutronmomentum);
         }
         
         hprotonTT = new TH1D("protonTT"+tag,"", sizeof(Jbin)/sizeof(double)-1, Jbin);
@@ -400,10 +454,12 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     
     hmuonmomentum = new TH1D("muonmomentum"+tag,"", 30, 0, 10); lout->Add(hmuonmomentum); hhs.push_back("muonmomentum");
     hmuontheta = new TH1D("muontheta"+tag,"", 25, 0, 25); lout->Add(hmuontheta); hhs.push_back("muontheta");
+    hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", 30, 0, 10, 25, 0, 25); lout->Add(hmuonmomentumVStheta); hhs.push_back("muonmomentumVStheta");
     
     hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0, 1); lout->Add(hpionmomentum); hhs.push_back("pionmomentum");
     hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk); hhs.push_back("pionEk");
     hpiontheta = new TH1D("piontheta"+tag,"", 35, 0, 180); lout->Add(hpiontheta); hhs.push_back("piontheta");
+    hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", 40, 0, 1, 35, 0, 180); lout->Add(hpionmomentumVStheta); hhs.push_back("pionmomentumVStheta");
   }
   else{
     printf("\n\nunknown anaid!! %d\n\n", anaid); exit(1);
