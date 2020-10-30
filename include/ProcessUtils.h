@@ -339,24 +339,33 @@ void ProceedMINERvAGFS()
   const double tmpmom = lineFullMom->P();
   const double tmptheta = lineFullMom->Theta()*TMath::RadToDeg();
   //const double tmpEk = lineFullMom->E()-lineFullMom->M();
-  const double tmpEk = Ekin(lineFullMom, lineMass);//only use experiment 3 momentum
+  //const double tmpEk = Ekin(lineFullMom, lineMass);//only use experiment 3 momentum
+  //double tmpcutcounter = 0;
+  //bool probl = false;
 
   if(
      //all muons, in fact just one charge, depending on the input
      IsMuon()
      ){
     totparcount+= MUONBIT;
-
+    
     if(tmpmom> 1.5 && tmpmom< 10 && tmptheta<20){//mu+ or mu-
       (*muonfullp)=(*lineFullMom);
       npar+= MUONBIT;
+      }
+    /*my modification - John
+    else{
+      tmpcutcounter++;
+      probl = true;
     }
+    */
   }
   else if(
           IsProton()
           ){
     AddABit(totparcount, PROTONBIT);
     
+   
     if(
        tmpmom> 0.45 && tmpmom< 1.2 && tmptheta<70
        ){
@@ -368,20 +377,33 @@ void ProceedMINERvAGFS()
         (*protonfullp)=(*lineFullMom);
         CLR_KNsrc = CLR_lineKNsource;
       }
-    }
+     }
+      // else if(!probl){
+      //tmpcutcounter++;
+      //probl = true;
+      // }
+      //
   }
   else if(//this structure only work won't work for 0pi selection!, check with: git diff 057314b6fe12798de8a68c916c68373684aa7ed7 src/Generator/AnaUtils.h
           IsPion() && (lineCharge+globalMuonCharge) == 0
           ){
     AddABit(totparcount, PIONBIT);
-    
+
+    //have to pick leading pion
+    //this bit picks out ALL pi-plus
+
+    //pion cuts turned off for now
     //&& tmpmom> 0.2 && tmpmom< 4.0 
-    if(tmpEk > 0.075 && tmpEk < 0.4 
-       && tmptheta<70
-       ){//pion
+    //if(tmpEk > 0.075 && tmpEk < 0.4 
+    //   && tmptheta<70
+    //   ){//pion
       (*pionfullp)=(*lineFullMom);
       AddABit(npar, PIONBIT);
-    }
+      // }
+      //else if(!probl){
+      // tmpcutcounter++;
+      // probl = true;
+      // }
   }
   else if(lineIsBkgParticle){//all mesons https://gibuu.hepforge.org/trac/wiki/ParticleIDs                                                                                                                                                                           
     if(globalMuonCharge == -999){
@@ -391,6 +413,7 @@ void ProceedMINERvAGFS()
     AddABit(totparcount, BKGBIT);
     AddABit(npar, BKGBIT);
   }
+  //cutcounter=tmpcutcounter;
 }
 
 
@@ -453,6 +476,8 @@ void ProceedMINERvAGFS0PI()
 {
   const double tmpmom = lineFullMom->P();
   const double tmptheta = lineFullMom->Theta()*TMath::RadToDeg();
+  double tmpcutcounter = 0;
+  bool probl = false;
 
   if(
      //all muons, in fact just one charge, depending on the input
@@ -463,6 +488,10 @@ void ProceedMINERvAGFS0PI()
     if(tmpmom> 1.5 && tmpmom< 10 && tmptheta<20){//mu+ or mu-
       (*muonfullp)=(*lineFullMom);
       npar+= MUONBIT;
+    }
+    else if(!probl){
+	tmpcutcounter++;
+	probl=true;
     }
   }
   else if(
@@ -482,6 +511,10 @@ void ProceedMINERvAGFS0PI()
         CLR_KNsrc = CLR_lineKNsource;
       }
     }
+    else if(!probl){
+      tmpcutcounter++;
+      probl=true;
+    }
   }
   else if(lineIsBkgParticle){//all mesons https://gibuu.hepforge.org/trac/wiki/ParticleIDs                                                                                                                                                                           
     if(globalMuonCharge == -999){
@@ -491,14 +524,17 @@ void ProceedMINERvAGFS0PI()
     AddABit(npar, BKGBIT);
   }
   else if(!IsNeutron()){
-    printf("GFS0PI strange background! linePID %d lineRawID %d\n", linePID, lineRawID); exit(1);
+    printf("GFS0PI strange background! linePID %d lineRawID %d\n", linePID, lineRawID); //exit(1);
   }
+  cutcounter=tmpcutcounter;
 }
 
 void ProceedMINERvAGFSPIZERO()
 {
   const double tmpmom = lineFullMom->P();
   const double tmptheta = lineFullMom->Theta()*TMath::RadToDeg();
+  double tmpcutcounter = 0;
+  bool probl = false;
 
   if(
      IsMuon()
@@ -510,6 +546,10 @@ void ProceedMINERvAGFSPIZERO()
        ){
       (*muonfullp)=(*lineFullMom);
       npar+= MUONBIT;
+    }
+    else if(!probl){
+      tmpcutcounter++;
+      probl=true;
     }
   }
   else if(
@@ -528,6 +568,10 @@ void ProceedMINERvAGFSPIZERO()
         (*protonfullp)=(*lineFullMom);
         CLR_KNsrc = CLR_lineKNsource;
       }
+    }
+    else if(!probl){
+       tmpcutcounter++;
+       probl=true;
     }
   }
   else if(
@@ -552,6 +596,7 @@ void ProceedMINERvAGFSPIZERO()
       printf("GFSPIZERO strange background! linePID %d lineRawID %d\n", linePID, lineRawID); exit(1);
     }
   }
+  cutcounter=tmpcutcounter;
 }
 
 void AddEav(const bool kprint=false)
