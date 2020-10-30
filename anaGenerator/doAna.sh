@@ -13,7 +13,7 @@ echo tag ${tag}
 echo anamode ${anamode}
 echo ntostop ${ntostop}
 
-./anaGenerator ${tag} ${fin}  ${anamode} ${ntostop}
+./anaGenerator_BACKUP ${tag} ${fin}  ${anamode} ${ntostop}
 
 exit
 
