@@ -71,8 +71,37 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
     int idxRESnucleon = -999;
     int idxRESpi = -999;
     int idxDelta = -999;
+
+    Int_t pionID = 1; Int_t leadingpionID = 0; 
+    double Etemp = -999.;
+
+    //loop over all particles, pick pi-p, get leading FS pi-p
+    
     for(int ii=1; ii<tmpnp; ii++){
-      const int tmpid = StdHepPdg[ii];
+      const int tmpid = StdHepPdg[ii]; //pip = 211
+      if(tmpid != 211){continue;}
+      //have to loop over all FS pions in event and pick leading pion
+
+      const GeneratorIO::dtype IniOrFinaltype = ReadGENIE::GetIniOrFinalType(ii, isHydrogen, tmpevent, tmpid);
+
+      if(IniOrFinaltype==GeneratorIO::kNULL){continue;} //not interested in non-FS pions
+      const double tmptote = StdHepP4[ii][3];
+      //check to see if leading
+      if(tmptote > Etemp){//update
+	Etemp = tmptote;
+	leadingpionID = pionID;
+      }
+      pionID++; //have to update for all FS pi-p
+
+    }//first loop over particles
+
+    pionID=0; //reset pi-plus counter, the record is not rearranged so this is good
+    //reset to 0 because this loop increments pionID immediately
+    //loop over all particles and calc, interfering with FS pi-p only 
+    bool isLeadingPion = false;
+    
+    for(int ii=1; ii<tmpnp; ii++){
+      const int tmpid = StdHepPdg[ii]; //pip = 211
 
       if( ( abs(tmpid) == 12 || abs(tmpid) == 14 || abs(tmpid) == 16 ) && StdHepFm[ii]!=0 ){//charm decay to neutrino
         continue;
@@ -87,22 +116,34 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
         continue;
       }
 
+      //leading pion is tagged in ID so will only calc pion if it's the same
+      if(tmpid==211){
+	pionID++;
+	if(pionID==leadingpionID){
+	  isLeadingPion=true;
+	}
+	else{
+	  isLeadingPion=false;
+	} //reset to false after leading pion found
+      }
+
       const GeneratorIO::dtype IniOrFinaltype = ReadGENIE::GetIniOrFinalType(ii, isHydrogen, tmpevent, tmpid);
       const GeneratorIO::dtype RESdtype = ReadGENIE::GetRESType(ii, ecode, IniOrFinaltype, idxIni, idxDelta, idxRESnucleon, idxRESpi);
       const double tmpKNsrc = ReadGENIE::GetKNsource(ii, IniOrFinaltype, idxDelta); //proton 1; pion -1      
       const bool isOK = (IniOrFinaltype!=GeneratorIO::kNULL || RESdtype!=GeneratorIO::kNULL);
 
-      if(isOK){
-        const double tmpmom1 = StdHepP4[ii][0];
-        const double tmpmom2 = StdHepP4[ii][1];
-        const double tmpmom3 = StdHepP4[ii][2];
-        const double tmptote = StdHepP4[ii][3];
+      if(isOK){ //continue if this is non-leading pi-plus
+	if(tmpid==211 && isLeadingPion==false){continue;}
 
+	const double tmpmom1 = StdHepP4[ii][0];
+	const double tmpmom2 = StdHepP4[ii][1];
+	const double tmpmom3 = StdHepP4[ii][2];
+	const double tmptote = StdHepP4[ii][3];
+	
         //test
         //const TVector3 tmpvec(tmpmom1, tmpmom2, tmpmom3); printf("test particle %d %f %f %f %f %d mom %f theta %f\n", ii, tmpmom1, tmpmom2, tmpmom3, tmptote, tmpid, tmpvec.Mag(), tmpvec.Theta()*TMath::RadToDeg());
 
         //if(ecode.Contains("QES")){ cout<<"test event "<<tmpevent<<" ii "<<ii<<" IniOrFinaltype "<<IniOrFinaltype<<" idxIni "<<idxIni<<" ecode "<<ecode<<" status "<<StdHepStatus[ii]<<" pdg "<<StdHepPdg[ii]<<" scat "<<StdHepRescat[ii]<<" StdHepFd "<<StdHepFd[ii]<<" StdHepLd "<<StdHepLd[ii]<<" RESdtype "<<RESdtype<<" "<<endl;}
-
         
         if(GeneratorIO::GENIEProceed(IniOrFinaltype, RESdtype, ecode, tmpevent, tmpprod, tmpenu, tmppw, tmpmom1, tmpmom2, tmpmom3, tmptote, tmpid, tmpKNsrc)){
           //if(ecode.Contains("QES")){printf("test now do Main IniOrFinaltype %d\n", IniOrFinaltype); ch->Show(ientry);}
