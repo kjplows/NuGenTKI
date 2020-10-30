@@ -146,11 +146,13 @@ void AnaUtils::Ini()
 
 bool AnaUtils::IsGood()
 {
-  if(anamode==GFS || anamode==GFSEXP || anamode==CLR){
+    if(anamode==GFSEXP || anamode==CLR){
+    //if(anamode==GFS || anamode==GFSEXP || anamode==CLR){
     cout<<"need to think more! stop for the moment"<<endl; exit(1);
   }
 
-  if(anamode==GFSPIZERO || anamode==GFS0PI){
+    if(anamode==GFSPIZERO || anamode==GFS0PI || anamode==GFS){
+    //if(anamode==GFSPIZERO || anamode==GFS0PI){
     if(IsBKG()){
       return false;
     }
@@ -165,7 +167,8 @@ bool AnaUtils::IsGood()
       return false;
     }
 
-    if(anamode==GFSPIZERO){
+      if(anamode==GFSPIZERO || anamode == GFS){
+      //if(anamode==GFSPIZERO){
       //1 or more pion
       if(GetNPions()==0){
         return false;
