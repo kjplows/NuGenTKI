@@ -12,7 +12,10 @@ export GFSPIZEROa7t4nuCarbon="outplot/outAna7_MINERvAGENIE_V3test_GFSPIZEROa7nuC
 #"outplot/outAna7_MINERvAGENIE_V2RG_LE_GFSPIZEROa7nuCH_Filelist_GENIE_V2RG_BeamNu_EnuMINERvA_TargetCarbon.root"
 export GFSPIZEROa7t4nuCH=
 
-export GFSt2nuCH=${GFSt1nuCH}
+export GFSa0t2nuCarbon="outplot/outAna0_MINERvAGENIE_V3test_GFSa0nuCH_Filelist_GENIE_V3test_BeamNu_EnuMINERvA_TargetCarbon.root"
+export GFSa0t4nuCarbon="outplot/outAna0_MINERvAGENIE_V3test_GFSa0nuCH_Filelist_GENIE_V3test_BeamNu_EnuMINERvA_TargetCarbon.root"
+
+#export GFSt2nuCH=${GFSt1nuCH}
 
 export LOWRECOILt8nuCH=
 
@@ -42,13 +45,19 @@ mkexe.sh getHist -I${NUGENTKI}/include
 
 #GFS 4 for GFSPIZEROa7
 
-opt=${tag}GFSPIZEROa7t4nuCarbon;    nohup ./getHist $GFSPIZEROa7t4nuCarbon    ${opt} 4   > see${opt}.log &
+#opt=${tag}GFSPIZEROa7t4nuCarbon;    nohup ./getHist $GFSPIZEROa7t4nuCarbon    ${opt} 4   > see${opt}.log &
 
 #exit
 
 #GFS 1 for GFS0PIa9t1
 
-opt=${tag}GFS0PIa9t1nuCarbon;       nohup ./getHist $GFS0PIa9t1nuCarbon       ${opt} 1   > see${opt}.log &
+#opt=${tag}GFS0PIa9t1nuCarbon;       nohup ./getHist $GFS0PIa9t1nuCarbon       ${opt} 1   > see${opt}.log &
+
+#GFS 2! anaid 1 is 0PI 2 is 1PI 4 is MPI 
+#opt=${tag}GFSa0t2nuCarbon;          nohup ./getHist $GFSa0t2nuCarbon          ${opt} 2   > see${opt}.log &
+opt=${tag}GFSa0t4nuCarbon;          nohup ./getHist $GFSa0t4nuCarbon          ${opt} 4   > see${opt}.log &
+#opt=${tag}GFSt1nuCH;          nohup ./getHist $GFSt1nuCH          ${opt} 1   > see${opt}.log &
+#opt=${tag}GFSt2nuCH;          nohup ./getHist $GFSt2nuCH          ${opt} 2   > see${opt}.log &
 
 exit
 
@@ -75,10 +84,6 @@ opt=${tag}CLRt1nuCH;          nohup ./getHist $CLRt1nuCH          ${opt} 1   > s
 opt=${tag}CLRt2nuCH;          nohup ./getHist $CLRt2nuCH          ${opt} 2   > see${opt}.log &
 
 exit
-
-#GFS 1 2 
-opt=${tag}GFSt1nuCH;          nohup ./getHist $GFSt1nuCH          ${opt} 1   > see${opt}.log &
-opt=${tag}GFSt2nuCH;          nohup ./getHist $GFSt2nuCH          ${opt} 2   > see${opt}.log &
 
 #LOWRECOIL 8
 opt=${tag}LOWRECOILt8nuCH;    nohup ./getHist $LOWRECOILt8nuCH    ${opt} 8   > see${opt}.log &
