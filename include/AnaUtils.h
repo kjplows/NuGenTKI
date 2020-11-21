@@ -327,16 +327,20 @@ void AnaUtils::Calc()
   baryonmass = baryonfullp->M();
 
   //---TKI: 4+1
+  /*//allow heavier nuclei
   if(targetZ!=6 && targetZ!=1){
     printf("AnaUtils::Calc targetZ not 1 nor 6! %d\n", targetZ); exit(1);
   }
+  */
 
   //pretend hydrogen is carbon, same as experiment
-  const int dummyA = 12;
+  const int localZ = (targetZ==1 ? 6 : targetZ);
+
+  const int localA = AnaFunctions::getTargetA(localZ);
   const TLorentzVector neutrinofullp(0,0,1,1);
   double dummymu, dummybaryon;
   //void getCommonTKI(const int targetA, const int targetZ, const TLorentzVector *neutrinofullp, const TLorentzVector *muonfullp, const TLorentzVector *baryonfullp, double & dalphat, double & dphit, double & dpt, double & neutronmomentum, double & dpTT, double & muontheta, double & baryontheta)
-  AnaFunctions::getCommonTKI(dummyA, targetZ, &neutrinofullp, muonfullp, baryonfullp, dalphat, dphit, dpt, neutronmomentum, dpTT, dummymu, dummybaryon);
+  AnaFunctions::getCommonTKI(localA, localZ, &neutrinofullp, muonfullp, baryonfullp, dalphat, dphit, dpt, neutronmomentum, dpTT, dummymu, dummybaryon);
   
   /*
     protonTT = protonfullp->Vect().Dot(ztt);

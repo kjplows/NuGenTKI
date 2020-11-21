@@ -6,7 +6,8 @@
 namespace ReadGENIE
 {
   
-  const int _ARRAYSIZE_ = 100;
+  //500 is needed for Pb
+  const int _ARRAYSIZE_ = 500;
 
   // Declaration of leaf types                                                                                                                                                                                                                                       
   TObjString      *gEvtCode;
