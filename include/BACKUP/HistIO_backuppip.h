@@ -28,26 +28,11 @@ namespace HistIO
   double Wtrue, Wrest, xBj, xrest, Q2;
   double protonmomentum, protontheta, pionmomentum, piontheta, pionEk, baryonmomentum, baryontheta, baryonmass;
   double dpt, dphit, dalphat,  neutronmomentum,  dpTT;
-  double omegamup, modelf, Tmax, chi;
 #endif
   TH1D * hmuonmomentum = 0x0, * hmuontheta = 0x0;
   TH1D * hWtrue = 0x0, * hWrest = 0x0, * hxBj = 0x0, * hxrest = 0x0, * hQ2 = 0x0;
   TH1D * hprotonmomentum = 0x0,* hprotontheta = 0x0, * hpionmomentum = 0x0, * hpiontheta = 0x0, * hpionEk =0x0, * hbaryonmomentum=0x0, * hbaryontheta=0x0, * hbaryonmass=0x0;
   TH1D * hdpt = 0x0, * hdphit = 0x0, * hdalphat = 0x0, * hneutronmomentum = 0x0, * hdpTT = 0x0;
-  TH1D * homegamup = 0x0, * hpionTmax = 0x0, * hchi = 0x0;
-
-  //correlation plots: muon proton and pion theta vs momentum
-  //raw histos here
-  TH2D * hmuonmomentumVStheta = 0x0;
-  TH2D * hprotonmomentumVStheta = 0x0;
-  TH2D * hpionmomentumVStheta = 0x0;
-  TH2D * hpionEkVStheta = 0x0;
-  // from here on 1st var Y axis 2nd var X axis
-  TH2D * hpionTmaxVStheta = 0x0; //technically Tmax vs (1 - costheta)
-  TH2D * hpionEkVSomegamup = 0x0;
-  TH2D * homegamupVStheta = 0x0;
-  TH2D * hchiVSdalphat = 0x0;
-  //normalised histos here
 
 #if __OPENCLR__
   double RESmass, adlerPhi, lrsign, w2;
@@ -108,10 +93,6 @@ void SetTree(TTree * tree, const int anaid)
   tree->SetBranchAddress("dalphat", &dalphat);
   tree->SetBranchAddress("neutronmomentum", &neutronmomentum);
   tree->SetBranchAddress("dpTT", &dpTT);
-
-  tree->SetBranchAddress("omegamup",&omegamup);
-  tree->SetBranchAddress("modelf",&modelf);
-  tree->SetBranchAddress("chi",&chi);
 #endif
 
 #if __OPENCLR__   
@@ -142,7 +123,6 @@ void FillTopoTaskHist()
 #if __OPENCALC__ 
   hmuonmomentum->Fill(muonmomentum,perweight);
   hmuontheta->Fill(muontheta,perweight);
-  hmuonmomentumVStheta->Fill(muonmomentum,muontheta,perweight);
 
   hQ2->Fill(Q2,perweight);
   hxBj->Fill(xBj,perweight);
@@ -150,12 +130,9 @@ void FillTopoTaskHist()
   
   hprotonmomentum->Fill(protonmomentum,perweight);
   hprotontheta->Fill(protontheta,perweight);  
-  hprotonmomentumVStheta->Fill(protonmomentum,protontheta,perweight);
   hpionmomentum->Fill(pionmomentum,perweight);
   hpiontheta->Fill(piontheta,perweight);
-  hpionmomentumVStheta->Fill(pionmomentum,piontheta,perweight);
   hpionEk->Fill(pionEk,perweight);
-  hpionEkVStheta->Fill(pionEk,piontheta,perweight);
   hbaryonmomentum->Fill(baryonmomentum,perweight);
   hbaryontheta->Fill(baryontheta,perweight);
   hbaryonmass->Fill(baryonmass,perweight);
@@ -165,17 +142,6 @@ void FillTopoTaskHist()
   hdalphat->Fill(dalphat,perweight);
   hneutronmomentum->Fill(neutronmomentum,perweight);
   hdpTT->Fill(dpTT,perweight);
-
-  Tmax = modelf / (1 - TMath::Cos(piontheta*TMath::DegToRad())) - 0.139; //charged pion mass
-  homegamup->Fill(omegamup,perweight);
-  hpionTmax->Fill(Tmax,perweight);
-  hpionTmaxVStheta->Fill(piontheta,Tmax,perweight); 
-  hchi->Fill(chi,perweight);
-
-  hpionEkVSomegamup->Fill(omegamup,pionEk,perweight);
-  homegamupVStheta->Fill(piontheta,omegamup,perweight);
-  hchiVSdalphat->Fill(dalphat,chi,perweight);
-
 #endif
 
 #if __OPENCLR__
@@ -246,7 +212,6 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
       hmuonmomentum = new TH1D("muonmomentum"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hmuonmomentum);
       hmuontheta = new TH1D("muontheta"+tag,"", 360, 0, 180); lout->Add(hmuontheta);
-      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hmuonmomentumVStheta);
     }
     //no cuts mode is OFF for now
     else if(anaid==CC0piNpID || anaid==CC1piNpID || anaid==CCMpiNpID){
@@ -258,8 +223,6 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       const double Bbin[]={0.000000, 0.5, 1., 1.5, 2.000000, 2.5, 3.000000, 3.5, 4.000000, 4.5, 5.000000, 5.5, 6.000000, 6.5, 7.000000, 7.5, 8.000000, 8.5, 9.000000, 9.5, 10.000000, 10.5, 11.000000, 11.5, 12.000000, 12.5, 13.000000, 13.5, 14.000000, 14.5, 15.000000, 15.5, 16.000000, 16.5, 17.000000, 17.5, 18.000000, 18.5, 19.000000, 19.5, 20.000000, 20.5, 21., 21.5, 22, 22.5, 23., 23.5, 24., 24.5, 25., 25.5, 26.};
     
       hmuontheta = new TH1D("muontheta"+tag,"", sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuontheta);
-
-      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin, sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuonmomentumVStheta);
     }
     
     else{
@@ -270,14 +233,8 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       const double Bbin[]={0.000000, 2.000000, 3.000000, 4.000000, 5.000000, 6.000000, 7.000000, 8.000000, 9.000000, 10.000000, 11.000000, 12.000000, 13.000000, 14.000000, 15.000000, 16.000000, 17.000000, 18.000000, 19.000000, 20.000000, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130};
       hmuontheta = new TH1D("muontheta"+tag,"", sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuontheta);
       //hmuontheta = new TH1D("muontheta"+tag,"", 360, 0, 180); lout->Add(hmuontheta);
-
-      hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", sizeof(Abin)/sizeof(double)-1, Abin, sizeof(Bbin)/sizeof(double)-1, Bbin); lout->Add(hmuonmomentumVStheta);
     }
     henu  = new TH1D("enu"+tag,"", 60, 0, 20); lout->Add(henu);
-    homegamup = new TH1D("omegamup"+tag,"", 180, 0, 90); lout->Add(homegamup);
-    hchi = new TH1D("chi"+tag,"",360, 0, 180); lout->Add(hchi);
-    //experimental binning here
-    //hchi = new TH1D("chi"+tag,"",180, 0, 180); lout->Add(hchi);
   }
   
   hRESmass = new TH1D("RESmass"+tag,"", 60, 0, 3); lout->Add(hRESmass);
@@ -305,16 +262,12 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     }
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
-      const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
-
       hprotontheta = new TH1D("protontheta"+tag,"", 360, 0, 180); lout->Add(hprotontheta);
-      hprotonmomentumVStheta = new TH2D("protonmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hprotonmomentumVStheta);
     }
     else{
-      const double Dbin[]={0.000000, 7.500000, 10.000000, 12.500000, 15.000000, 17.500000, 20.000000, 22.500000, 25.000000, 27.500000, 30.000000, 32.500000, 35.000000, 37.500000, 40.000000, 42.500000, 45.000000, 47.500000, 50.000000, 52.500000, 55.000000, 57.500000, 60.000000, 62.500000, 65.000000, 67.500000, 70.000000}; 
-      hprotontheta = new TH1D("protontheta"+tag,"", sizeof(Dbin)/sizeof(double)-1, Dbin); lout->Add(hprotontheta);
-      hprotonmomentumVStheta = new TH2D("protonmomentumVStheta"+tag,"", 60, 0, 3., sizeof(Dbin)/sizeof(double)-1, Dbin); lout->Add(hprotonmomentumVStheta);
-      //hprotontheta = new TH1D("protontheta"+tag,"", 360, 0, 180); lout->Add(hprotontheta);
+      //const double Dbin[]={0.000000, 7.500000, 10.000000, 12.500000, 15.000000, 17.500000, 20.000000, 22.500000, 25.000000, 27.500000, 30.000000, 32.500000, 35.000000, 37.500000, 40.000000, 42.500000, 45.000000, 47.500000, 50.000000, 52.500000, 55.000000, 57.500000, 60.000000, 62.500000, 65.000000, 67.500000, 70.000000}; 
+      //hprotontheta = new TH1D("protontheta"+tag,"", sizeof(Dbin)/sizeof(double)-1, Dbin); lout->Add(hprotontheta);
+      hprotontheta = new TH1D("protontheta"+tag,"", 360, 0, 180); lout->Add(hprotontheta);
     }
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
@@ -323,52 +276,22 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     }
     else{
       //hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0, 1); lout->Add(hpionmomentum);
-      hpionmomentum = new TH1D("pionmomentum"+tag,"", 240, 0., 6.); lout->Add(hpionmomentum); //changed max momentum to 6 GeV/c.
+      hpionmomentum = new TH1D("pionmomentum"+tag,"", 50, 0, 1.25); lout->Add(hpionmomentum);
       // good for pizero and 0pi, too broad for pi-plus (below)
       //hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0.1, 0.55); lout->Add(hpionmomentum);
-      //nocuts mode is ON so go with the 25 MeV/c bins!
     }
 
-    //hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk); //binwidth = 12.5 MeV/bin
-    //pion at 2 GeV/c has ~ 1.87 GeV KE ==> ~150 bins
-    //hpionEk = new TH1D("pionEk"+tag,"",470,0,5.86); lout->Add(hpionEk);
-    //focus on the problem region, 0 <= T <= 0.5 GeV. Binwidths are 0.005 GeV there. Then 220 bins of width 0.025 GeV.
-    Double_t Tbin[321]; //Tbin[531];
-    for(Int_t i = 0; i < 100; i++){Tbin[i] = 0.005*((Double_t)i);}
-    for(Int_t i = 100; i < 321; i++){Tbin[i] = 0.5 + 0.025*(Double_t)(i-100);}
-    hpionEk = new TH1D("pionEk"+tag,"",320,Tbin); lout->Add(hpionEk);
-
-    //pi-plus below, cut 75 MeV <= Ek <= 400 MeV //NOT YET JOHN
+    //hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk);
+    hpionEk = new TH1D("pionEk"+tag,"",80,0,1.); lout->Add(hpionEk);
+    //pi-plus below, cut 75 MeV <= Ek <= 400 MeV
     //hpionEk = new TH1D("pionEk"+tag,"", 40, 0.075, 0.4); lout->Add(hpionEk);
 
     if(anaid==CCEXCL3H1||anaid==CCEXCL3H4){
-      const double Cbin[]={0.025000, 0.028183, 0.031770, 0.035815, 0.040374, 0.045514, 0.051308, 0.057840, 0.065203, 0.073504, 0.082861, 0.093410, 0.105301, 0.118707, 0.133819, 0.150854, 0.170059, 0.191708, 0.216113, 0.243626, 0.274640, 0.309603, 0.349017, 0.393448, 0.443536, 0.500000, 0.563652, 0.635408, 0.716298, 0.807486, 0.910282, 1.026165, 1.156800, 1.304066, 1.470079, 1.657227, 1.868199, 2.106029, 2.374136, 2.676374, 3.017088, 3.401177, 3.834161, 4.322267, 4.872511, 5.492803, 6.192061, 6.980337, 7.868965, 8.870719, 10.000000};
-
       hpiontheta = new TH1D("piontheta"+tag,"", 360, 0, 180); lout->Add(hpiontheta);
-      hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hpionmomentumVStheta);
-      hpionEkVStheta = new TH2D("pionEkVStheta"+tag,"",sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hpionEkVStheta);
-      hpionEkVSomegamup = new TH2D("pionEkVSomegamup"+tag,"",180,0,90,sizeof(Cbin)/sizeof(double)-1,Cbin); lout->Add(hpionEkVSomegamup);
-      homegamupVStheta = new TH2D("omegamupVStheta"+tag,"",360,0,180,180,0,90); lout->Add(homegamupVStheta);
-      hpionTmax = new TH1D("pionTmax"+tag,"",sizeof(Cbin)/sizeof(double)-1, Cbin); lout->Add(hpionTmax);
-      hpionTmaxVStheta = new TH2D("pionTmaxVStheta"+tag,"",sizeof(Cbin)/sizeof(double)-1, Cbin, 360, 0, 180); lout->Add(hpionTmaxVStheta);
     }
     else{
       //hpiontheta = new TH1D("piontheta"+tag,"", 35, 0, 70); lout->Add(hpiontheta);
-      //focus on C/6H and get dip plots0.5 deg binwidths
-      //hpiontheta = new TH1D("piontheta"+tag,"",36,0,180); lout->Add(hpiontheta);
-      hpiontheta = new TH1D("piontheta"+tag,"",360,0,180); lout->Add(hpiontheta);
-
-      hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", 240, 0, 6., 36, 0, 180); lout->Add(hpionmomentumVStheta);
-      
-      Double_t Tbin[321]; //Tbin[531];
-      for(Int_t i = 0; i < 100; i++){Tbin[i] = 0.005*((Double_t)i);}
-      for(Int_t i = 100; i < 321; i++){Tbin[i] = 0.5 + 0.025*((Double_t)(i-100));}
-      //hpionEkVStheta = new TH2D("pionEkVStheta"+tag,"", 240, 0, 6., 36, 0, 180); lout->Add(hpionEkVStheta);
-      hpionEkVStheta = new TH2D("pionEkVStheta"+tag,"", 320, Tbin, 360, 0, 180); lout->Add(hpionEkVStheta);
-      hpionEkVSomegamup = new TH2D("pionEkVSomegamup"+tag,"",180,0,90,320,Tbin); lout->Add(hpionEkVSomegamup);
-      homegamupVStheta = new TH2D("omegamupVStheta"+tag,"",360,0,180,180,0,90); lout->Add(homegamupVStheta);
-      hpionTmax = new TH1D("pionTmax"+tag,"", 320, Tbin); lout->Add(hpionTmax);
-      hpionTmaxVStheta = new TH2D("pionTmaxVStheta"+tag,"", 360, 0, 180, 320, Tbin); lout->Add(hpionTmaxVStheta);
+      hpiontheta = new TH1D("piontheta"+tag,"",36,0,180); lout->Add(hpiontheta);
     }
     
     hbaryonmomentum = new TH1D("baryonmomentum"+tag,"", 30, 0.2, 6); lout->Add(hbaryonmomentum);
@@ -398,7 +321,6 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
 	  } */ //rebinning dalphat for now
 	else if(anaid==CC1piNpID || anaid==CCMpiNpID){
 	  hdalphat = new TH1D("dalphat"+tag,"", 36, 0., 180.);
-	  hchiVSdalphat = new TH2D("chiVSdalphat"+tag,"", 36, 0., 180., 36, 0., 180.); lout->Add(hchiVSdalphat);
 	}
         
         const double Fbin[]={0.000000, 2.500000, 5.000000, 7.500000, 10.000000, 12.500000, 15.000000, 17.500000, 20.000000, 22.500000, 25.000000, 27.500000, 30.000000, 35.000000, 40.000000, 45.000000, 50.000000, 55.000000, 60.000000, 70.000000, 85.000000, 105.000000, 130.000000, 180.000000};
@@ -428,12 +350,10 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
       if(anaid==CC0piNpID){//defined by T2K analysis
         const double Ebin[] = {0.00000, 26.929016, 58.441695, 88.235500, 113.445643, 134.072124, 151.260858, 165.584803, 180.000};
         hdalphat = new TH1D("dalphat"+tag,"", sizeof(Ebin)/sizeof(double)-1, Ebin);
-	hchiVSdalphat = new TH2D("chiVSdalphat"+tag,"", sizeof(Ebin)/sizeof(double) -1, Ebin, sizeof(Ebin)/sizeof(double) -1, Ebin); lout->Add(hchiVSdalphat);
       }
       else{
         const double Ebin[]= {0.000000, 20.000000, 40.000000, 60.000000, 80.000000, 100.000000, 120.000000, 130.000000, 140.000000, 150.000000, 160.000000, 170.000000, 180.000000};
         hdalphat = new TH1D("dalphat"+tag,"", sizeof(Ebin)/sizeof(double)-1, Ebin);
-	hchiVSdalphat = new TH2D("chiVSdalphat"+tag,"", sizeof(Ebin)/sizeof(double) -1, Ebin, sizeof(Ebin)/sizeof(double) -1, Ebin); lout->Add(hchiVSdalphat);
       }
       
       const double Fbin[]={0.00000, 3.838817, 8.021409, 12.891550, 19.480565, 29.793805, 48.701413, 85.943669, 180.00};
@@ -508,15 +428,10 @@ vector<TString> SetHist(const TString tag, const TString nuExp, const int anaid,
     
     hmuonmomentum = new TH1D("muonmomentum"+tag,"", 30, 0, 10); lout->Add(hmuonmomentum); hhs.push_back("muonmomentum");
     hmuontheta = new TH1D("muontheta"+tag,"", 25, 0, 25); lout->Add(hmuontheta); hhs.push_back("muontheta");
-    hmuonmomentumVStheta = new TH2D("muonmomentumVStheta"+tag,"", 30, 0, 10, 25, 0, 25); lout->Add(hmuonmomentumVStheta); hhs.push_back("muonmomentumVStheta");
     
     hpionmomentum = new TH1D("pionmomentum"+tag,"", 40, 0, 1); lout->Add(hpionmomentum); hhs.push_back("pionmomentum");
     hpionEk = new TH1D("pionEk"+tag,"", 40, 0, 0.5); lout->Add(hpionEk); hhs.push_back("pionEk");
     hpiontheta = new TH1D("piontheta"+tag,"", 35, 0, 180); lout->Add(hpiontheta); hhs.push_back("piontheta");
-    hpionmomentumVStheta = new TH2D("pionmomentumVStheta"+tag,"", 40, 0, 1, 35, 0, 180); lout->Add(hpionmomentumVStheta); hhs.push_back("pionmomentumVStheta");
-    hpionEkVStheta = new TH2D("pionEkVStheta"+tag,"",40,0,0.87,35,0,180); lout->Add(hpionEkVStheta); hhs.push_back("pionEkVStheta");
-    hpionEkVSomegamup = new TH2D("pionEkVSomegamup"+tag,"",35,0,90,40,0,0.87); lout->Add(hpionEkVSomegamup); hhs.push_back("pionEkVSomegamup");
-    homegamupVStheta = new TH2D("omegamupVStheta"+tag,"",360,0,180,180,0,90); lout->Add(homegamupVStheta);
   }
   else{
     printf("\n\nunknown anaid!! %d\n\n", anaid); exit(1);

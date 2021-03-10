@@ -24,7 +24,7 @@ TH1D* getMINERvA(const TString pint, const TString varname, TMatrixD *& cov)
     //fin = new TFile("data/MINERvA_1805.05486_v3.root");//official_release_data_fullCov_deelastic
     //fin = new TFile("data/MINERvA_1805.05486_v2.root");//CC0piTKI_MINERvAPRL/official_release_data_fullCov
   }
-  else if(pint=="pi0"){
+  else if(pint=="pi0" || pint=="pip"){
     fin = new TFile("data/PIZEROTKI_MINERvA.root");
   }
   if(!fin){
@@ -208,12 +208,12 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   }
   else if(sgen=="oobgibuu"){
     if(pint=="0pi"){
-      //filehead = "data/MINERvALEGiBUUGFS0PIa9t1nuCarbon";
-      filehead = "data/GFS0PIMINERvAGiBUULE_CarbonOnly";
+      filehead = "data/MINERvALEGiBUUGFS0PIa9t1nuCarbon";
+      //filehead = "data/GFS0PIMINERvAGiBUULE_CarbonOnly";
     }
     else if(pint=="pi0"){
-      //filehead = "data/MINERvALEGiBUUGFSPIZEROa7t4nuCarbon";
-      filehead = "data/GFSPIZEROMINERvAGiBUULE_CarbonOnly";
+      filehead = "data/MINERvALEGiBUUGFSPIZEROa7t4nuCarbon";
+      //filehead = "data/GFSPIZEROMINERvAGiBUULE_CarbonOnly";
     }
     filetag.push_back("");
 
@@ -238,10 +238,15 @@ int mcchi2(const int opt, const TString sgen, const TString pint)
   }
   else if(sgen=="geniev3oob"){
     if(pint=="0pi"){
-      filehead = "data/GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly";
+      filehead = "data/MINERvAGENIEGFS0PIa9t1nuCarbon";
+//filehead="GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly";
     }
     else if(pint=="pi0"){
-      filehead = "data/GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly";
+      filehead = "data/MINERvAGENIEGFSPIZEROa7t4nuCarbon";
+      //filehead = "data/GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly";
+    }
+    else if(pint=="pip"){
+      filehead = "data/MINERvAGENIEGFSa0t2nuCarbon";
     }
     filetag.push_back("");
 
@@ -546,9 +551,9 @@ int main()
 
   vector<TString> sgen;
 
-  sgen.push_back("PRD");
-  sgen.push_back("oobgibuu");
-  //sgen.push_back("geniev3oob");
+  //sgen.push_back("PRD");
+  //sgen.push_back("oobgibuu");
+  sgen.push_back("geniev3oob");
   //sgen.push_back("geniev2DC");
   //sgen.push_back("genieV2RG");
   //sgen.push_back("geniev2TJ");
@@ -559,6 +564,7 @@ int main()
   vector<TString> pint;
   pint.push_back("0pi");
   pint.push_back("pi0");
+  pint.push_back("pip");
 
   for(unsigned io=0; io<opt.size(); io++){
     for(unsigned is=0; is<sgen.size(); is++){

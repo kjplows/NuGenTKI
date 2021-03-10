@@ -42,8 +42,21 @@ NUBAR="Nubar"
 
 ################################################################################################
 tuneTag=G18_10b_00_000
-#G18_02a_00_000
-#G18_10b_00_000
+#G18_01a_00_000 #diffractive/lambda production interactions, hA FSI
+#G18_01a_02_11a #re-tune free-nucleon xsec model, using bubble-chamber CC1pi, CC2pi, CC-inclusive xsec data
+#G18_01b_00_000 #as G18_01a but hN FSI
+#G18_01b_02_11a
+#G18_02a_00_000 #As G18_01a, updated Berger-Sehgal for RES,COH
+#G18_02a_02_11a
+#G18_02b_00_000 #As G18_01b
+#G18_02b_02_11a
+#G18_10a_00_000 #Similar to G18_02a. LFG. Nieves for CCQE, 2p2h
+#G18_10a_02_11a 
+#G18_10b_00_000 #Similar to G18_02b.
+#G18_10b_02_11a
+#G18_10i_00_000 #Similat to G18_10a. Axial param z-exp.
+#G18_10j_00_000 #Similar to G18_10b.
+
 tmpGENIEtune=$(echo $tuneTag|tr -d '_')
 splineroot=$(readlink -f $(find ${GENIEspline}| grep $tmpGENIEtune | grep .root))
 splinefile=$(readlink -f $(find ${GENIEspline}| grep $tmpGENIEtune | grep small))
@@ -59,44 +72,58 @@ then
     exit
 fi
 
+#######################################
+## Accessing the unofficial anti-numu RHC playlist-6A flux
+export MYPLOTUTILS="/minerva/app/users/kplows/cmtuser/Minerva_v22r1p1_kplows_publicfluxes/Ana/PlotUtils"
+export MYFLUXFILES=$MYPLOTUTILS"/data/flux/ME_fluxes_for_generators"
+#######################################
+
 model=" --event-generator-list Default+CCMEC "
 
-aaa=V3test
+aaa=V3MEBAR_H_NOFSI
+#V3LEBAR
+#V3LE
+#V3ME
 #v2TJ
 #v2DC
 #V2RG
 #v3OOB
 
-jobid=g1${aaa}
+jobid=k1${aaa}
 
 GENIETAG="GENIE_${aaa}_Tune${tuneTag}"
+#"GENIE_${aaa}_Tune${tuneTag}"
 
-nevt=20000
+nevt=500000 #with 2 jobs this is fine comrade
+#20000
 #200000
 #10
 #
 
-for imultiple in $( seq 1 5) 
+for imultiple in $( seq 1 2) #JOHN YOU SHOULD NEVER RUN MORE THAN 4 PROCESSES ON A GPVM
+#Use the batch system for more jobs. So gotta figure that out. 
 #$( seq 1 2) 
 #
 do
-    for enu in ${MINERVA_LE} 
+    for enu in ${MME}
+#${MINERVA_LE}
+# ${MME}
 #${DUNE}
 #2400 800
 #${T2K}
-#${MME}
 #3000
 #600 3000 6000
     do
 
-        for beam in $NUUUU 
+        for beam in $NUBAR
+#$NUUUU 
 #$NUBAR
         do
 
-        for target in Carbon
-#CH
-#Carbon
+        for target in Hydrogen
 #Hydrogen
+#Carbon
+#CH
 #P50
 #$(echo Carbon Oxygen Lead Iron Argon Hydrogen )
 #CH )
@@ -142,6 +169,7 @@ do
             tag=ii$(printf "%03d" $ii)_${GENIETAG}_Beam${beam}_Enu${enu}_Target${target}
         
             dir=job$jobid/$tag
+	    #output/job$jobid/$tag
         
             mkdir -p $dir
             cd $dir
@@ -166,9 +194,16 @@ do
             then
                 if [ $beam == ${NUUUU} ]
                 then
-                    energyTerm="-e 0,100 -f ${GENIEbase}/flux/Unofficial_NumuMEFlux_NueConstrained.root,flux_E_cvweighted_CV_WithStatErr"
+                    energyTerm="-e 0,100 -f ${MYFLUXFILES}/Unofficial_NumuMEFlux_NueConstrained.root,flux_E_cvweighted_CV_WithStatErr"
+		    #"-e 0,100 -f ${GENIEbase}/flux/Unofficial_NumuMEFlux_NueConstrained.root,flux_E_cvweighted_CV_WithStatErr"
                 else
-                    echo "No MINERvA ME for anti-neutrino!"
+		    if [ ! -e ${MYFLUXFILES} ]
+		    then
+			echo "MYFLUXFILES not found at ${MYFLUXFILES}"
+		    fi
+		    energyTerm="-e 0,100 -f ${MYFLUXFILES}/flux-gen2thin-minervame6A_root5.root,flux_E_cvweighted_CV_WithStatErr"
+		    #idea is I just want to make a chi ME prediction for now, can always run FluxReweighter (with eroica?) and save that first..
+                    #echo "No MINERvA ME for anti-neutrino!"
                     return
                 fi
 
@@ -212,10 +247,19 @@ do
             #cmd="gevgen ${model} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections $(readlink -f ${GENIEbase}/inuse/spline/gxspl-FNALsmall.xml) -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
 
             #cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log"
-            cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+            
+
+	    cmd="ln -s ${splineroot}; gevgen ${model} --tune ${tuneTag} -n $nevt ${energyTerm} ${nuTerm} -t $tgt --seed ${localseed} --cross-sections ${splinefile} -o output${tag}.root  > seeEvgen${tag}.log; tail -n 150 seeEvgen${tag}.log > tmp; mv tmp seeEvgen${tag}.log; gntpc --tune ${tuneTag} -i output${tag}.root -f rootracker > seeNtpc${tag}.log; tail -n 150 seeNtpc${tag}.log > tmp; mv tmp seeNtpc${tag}.log"
+
+	    dirdat=/minerva/data/users/kjp/GENIE/genGENIE/job$jobid
+
+	    #cmd2="mkdir -p ${dirdat}; cd ..; mv ${tag} ${dirdat}; rm -r ${tag};"
+
                 
             echo $cmd
             echo
+	    #echo $cmd2
+	    echo
         
             cat > $jobfile <<EOF
 
@@ -224,8 +268,6 @@ source $(readlink -f ~/setupGENIE.sh)
 cd $(pwd)
 
 date
-
-#cp ${GENIE}/config/UserPhysicsOptions.xml .
 
 ${cmd}
 
@@ -236,7 +278,7 @@ EOF
             chmod +x $jobfile
         
         
-            #condor_qsub -l cput=04:00:00 -N $jobfile  ./$jobfile 
+           # condor_qsub -l cput=04:00:00 -N $jobfile  ./$jobfile 
             
             cat > myjob.submit <<EOF
 executable              = ${jobfile}

@@ -27,9 +27,11 @@ TF1* GENIEgetCCSpline(const int nuPDG, const int targetA);
 
 double CHspline(double *x, double *p)
 {
-  TF1 * spC = GENIEgetCCSpline((int)(p[0]), 12);
+  //TF1 * spC = GENIEgetCCSpline((int)(p[0]), 12);
   TF1 * spH = GENIEgetCCSpline((int)(p[0]), 1);
-  return spC->Eval(x[0])+spH->Eval(x[0]);
+  //return spC->Eval(x[0])+spH->Eval(x[0]); //Only for CH target
+  //return spC->Eval(x[0]); //Only fir C target
+  return spH->Eval(x[0]); //Only for H target
 }
 
 TF1* GENIEgetCCSpline(const int nuPDG, const int targetA)
@@ -53,6 +55,7 @@ TF1* GENIEgetCCSpline(const int nuPDG, const int targetA)
       const TString splineFileName = "list/xsec_graphs.root";
       cout<<"\n\nGENIEUtils GENIEgetCCSpline using local spline "<<splineFileName;
       gSystem->Exec(Form("readlink -f %s", splineFileName.Data()));
+      gSystem->Exec("pwd"); //where am I?
       cout<<"\n\n";
 
       TFile splineFile(splineFileName);

@@ -31,10 +31,11 @@ setup xrootd            v4_8_0b         -f Linux64bit+3.10-2.17 -q e17:prof     
 
 export PYTHIA6=$PYTHIA6_LIBRARY
 
-export GENIEbase=/minerva/app/users/xlu/software/GENIE
+export GENIEbase=/nashome/k/kplows/GENIE/GEBASE
+#/minerva/app/users/xlu/software/GENIE
 
 export myGENIE=${GENIEbase}/inuse
-export GENIEspline=/minerva/app/users/xlu/software/GENIEspline
+export GENIEspline=/minerva/app/users/xlu/software/GENIEspline #Xianguo has all the default tune splines
 #${myGENIE}/spline
 #
 

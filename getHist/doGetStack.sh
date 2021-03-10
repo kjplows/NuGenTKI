@@ -1,6 +1,14 @@
 dir0=$(pwd)
 
-for anaid in MINERvALEGiBUUGFS0PIa9t1nuCarbon MINERvALEGiBUUGFSPIZEROa7t4nuCarbon
+for anaid in MINERvAMEBARGiBUUGFSa0t4nuHydrogen MINERvAMEBARGiBUUGFSa0t4nuCarbon
+#MINERvAMEGiBUUGFSPIZEROa7t4nuCarbon MINERvAMEGiBUUGFSPIZEROa7t4nuHydrogen
+#MINERvAMEBARGiBUUGFSa0t4nuCarbon MINERvAMEBARGiBUUGFSa0t4nuHydrogen
+#MINERvAMEGiBUUGFSa0t4nuCarbon MINERvAMEGiBUUGFSa0t4nuHydrogen MINERvAMEGiBUUGFSa0t4nuCH
+#MINERvAMEGiBUUGFSa0t4nuHydrogen
+#MINERvAMEGENIEGFSa0t4nuHydrogen
+#MINERvALEGiBUUGFSa0t4nuHydrogen 
+#MINERvALEGiBUUGFSa0t4nuCarbon
+#MINERvALEGiBUUGFS0PIa9t1nuCarbon MINERvALEGiBUUGFSPIZEROa7t4nuCarbon
 #MINERvAGENIEGFSPIZEROa7t4nuCarbon MINERvAGENIEGFS0PIa9t1nuCarbon
 #GFS0PIMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGiBUULE_CarbonOnly GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly
 #GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly GFS0PIMINERvAGENIE_v2DC_LE_CarbonOnly
@@ -36,14 +44,16 @@ do
     echo tag $tag
     echo
 
-    commonVar="enu muonmomentum muontheta Q2 xBj xrest Wtrue Wrest "
+    commonVar="enu omegamup chi muonmomentum muontheta muonmomentumVStheta Q2 xBj xrest Wtrue Wrest "
+    #commonVar="chi "
 
     if [  $anaid == GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFS0PIa9t1nuCarbon  -o $anaid == MINERvALEGiBUUGFS0PIa9t1nuCarbon ]
     then
         varray=${commonVar}" protonmomentum protontheta dpt dphit dalphat neutronmomentum"
-    elif [ $anaid == GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFSPIZEROa7t4nuCarbon -o $anaid == MINERvALEGiBUUGFSPIZEROa7t4nuCarbon ]
+    elif [ $anaid == GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFSPIZEROa7t4nuCarbon -o $anaid == MINERvALEGiBUUGFSPIZEROa7t4nuCarbon -o $anaid == MINERvAGENIEGFSa0t2nuCarbon -o $anaid == MINERvALEGiBUUGFSa0t2nuCarbon -o $anaid == MINERvALEGiBUUGFSa0t4nuCarbon -o $anaid==MINERvALEGiBUUGFSa0t4nuHydrogen -o $anaid == MINERvAMEBARGiBUUGFSa0t4nuCarbon -o $anaid == MINERvAMEBARGiBUUGFSa0t4nuHydrogen -o $anaid == MINERvAMEGiBUUGFSPIZEROa7t4nuCarbon -o $anaid == MINERvAMEGiBUUGFSPIZEROa7t4nuHydrogen ]
     then
-        varray=${commonVar}" protonmomentum protontheta pionmomentum piontheta pionEk baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT "
+        varray=${commonVar}" protonmomentum protontheta pionmomentum piontheta pionmomentumVStheta pionEk pionEkVStheta pionEkVSomegamup omegamupVStheta pionTmax pionTmaxVStheta baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT chiVSdalphat "
+	#varray=${commonVar}
 
     elif [  $anaid == DUNEEXCL3_CH ]                                                                                           
     then                                                                                                                       
@@ -75,7 +85,7 @@ T dpTT20s dpTT10s dpTT5s dpTT2s "
         echo var $var 
         echo
 
-        root -b -l -q 'getStack.C("'${fin}'", "'${anaid}'","'${tag}'","'${var}'")'
+        root -b -l -q 'getStack2.C("'${fin}'", "'${anaid}'","'${tag}'","'${var}'")'
 
     done
 done
@@ -86,9 +96,8 @@ if [ $nfile != 0 ]
 then
     cd outStack/${anaid}
     ls *.root
-    hadd ${anaid}.root *.root > seemerge.log
+    hadd  ${anaid}.root *.root > seemerge.log
 fi
 
 done
-
 

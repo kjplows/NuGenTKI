@@ -146,69 +146,78 @@ void AnaUtils::Ini()
 
 bool AnaUtils::IsGood()
 {
-  if(anamode==GFS || anamode==GFSEXP || anamode==CLR){
+    if(anamode==GFSEXP || anamode==CLR){
+    //if(anamode==GFS || anamode==GFSEXP || anamode==CLR){
     cout<<"need to think more! stop for the moment"<<endl; exit(1);
   }
 
-  if(anamode==GFSPIZERO || anamode==GFS0PI){
-    if(IsBKG()){
-      return false;
-    }
-
-    //1mu
-    if(GetNMuons()!=1){
-      return false;
-    }
-    
-    //Np at least one proton needed for baryon kinematic calculation
-    if(GetNProtons()==0){
-      return false;
-    }
-
-    if(anamode==GFSPIZERO){
-      //1 or more pion
-      if(GetNPions()==0){
-        return false;
+    if(anamode==GFSPIZERO || anamode==GFS0PI || anamode==GFS){
+      if(anamode==GFS && ProcessUtils::nuEcutflag){ //fix GiBUU flux? Hopefully
+	return false;
       }
-    }
-    else{
-      //require 0 pi 
-      if(GetNPions()){
-        return false;
+      //if(anamode==GFSPIZERO || anamode==GFS0PI){
+      if(IsBKG()){
+	return false;
       }
+      
+      //1mu
+      if(GetNMuons()!=1){
+	return false;
+      }
+      
+      //Np at least one proton needed for baryon kinematic calculation
+      //if(GetNProtons()==0){
+      if(GetNProtons()!=1){ //more rigorous test for GiBUU
+	return false;
+      }
+      
+      if(anamode==GFSPIZERO || anamode == GFS){
+	//if(anamode==GFSPIZERO){
+	//1 or more pion
+	//if(GetNPions()==0){
+	//1 pion only
+	if(GetNPions()!=1){
+	  return false;
+	}
+      }
+      else{
+	//require 0 pi 
+	if(GetNPions()){
+	  return false;
+	}
+      }
+      
+      return true;
+      
+      /*
+      //1mu
+      //0pi at least 1 p
+      //1pi any p
+      return (npar >= 101 && npar < 120);
+      */
     }
-
-    return true;
-
-    /*
-    //1mu
-    //0pi at least 1 p
-    //1pi any p
-    return (npar >= 101 && npar < 120);
-    */
-  }
-  else if(anamode==RESPS){
-    //1mu
-    if(GetNMuons()!=1){
-      return false;
+    else if(anamode==RESPS){
+      //1mu
+      if(GetNMuons()!=1){
+	return false;
+      }
+      
+      //0 or 1pi
+      if(GetNPions()>1){
+	return false;
+      }
+      
+      if(IsBKG()){
+	return false;
+      }
+      
+      //only care about RES
+      if(evtMode!=2){
+	return false;
+      }
+      
+      return true;
     }
-
-    //0 or 1pi
-    if(GetNPions()>1){
-      return false;
-    }
-
-    if(IsBKG()){
-      return false;
-    }
-
-    //only care about RES
-    if(evtMode!=2){
-      return false;
-    }
-
-    return true;
-  }
   else if(anamode==MMECCQE){
     if(GetNMuons()!=1){
       return false;
@@ -320,6 +329,17 @@ void AnaUtils::Calc()
   //pionEk = pionfullp->E()-PionMass();
   pionEk = Ekin(pionfullp, PionMass()); //only use experimental momentum
 
+  omegamup = muonfullp->Angle(protonfullp->Vect())*TMath::RadToDeg();
+  //modelf = muonfullp->E() * protonfullp->E() / lineenu * (1.-TMath::Cos(omegamup*TMath::DegToRad()));
+  const double gee = 0.876;
+  modelf = (muonfullp->E() * protonfullp->P() - gee) / lineenu * TMath::Cos(omegamup*TMath::DegToRad());
+  //TVector3 n1 = ((dummyNu.Vect()).Unit()).Cross((muonfullp->Vect()).Unit());
+  TVector3 n1 = ((dummyNu.Vect()).Cross(muonfullp->Vect())).Unit();
+  //TVector3 n2 = ((protonfullp->Vect()).Unit()).Cross((pionfullp->Vect()).Unit());
+  TVector3 n2 = ((protonfullp->Vect()).Cross(pionfullp->Vect())).Unit();
+  double n1dotn2 = n1.Dot(n2); //if(n1dotn2 < 0.){n1dotn2 *= -1;}
+  chi = TMath::ACos(n1dotn2) * TMath::RadToDeg();
+        
   //(*baryonfullp) = (*protonfullp) + (*pionfullp);
   baryonfullp->SetXYZT(protonfullp->X()+pionfullp->X(), protonfullp->Y()+pionfullp->Y(), protonfullp->Z()+pionfullp->Z(), Energy(protonfullp, ProtonMass())+Energy(pionfullp, pionfullp->P()>1E-10? PionMass():0));//need to use experimental momentum only
   baryonmomentum = baryonfullp->P();
@@ -339,8 +359,11 @@ void AnaUtils::Calc()
   const int localA = AnaFunctions::getTargetA(localZ);
   const TLorentzVector neutrinofullp(0,0,1,1);
   double dummymu, dummybaryon;
+  double dummyomega, dummymodelf, dummychi;
   //void getCommonTKI(const int targetA, const int targetZ, const TLorentzVector *neutrinofullp, const TLorentzVector *muonfullp, const TLorentzVector *baryonfullp, double & dalphat, double & dphit, double & dpt, double & neutronmomentum, double & dpTT, double & muontheta, double & baryontheta)
-  AnaFunctions::getCommonTKI(localA, localZ, &neutrinofullp, muonfullp, baryonfullp, dalphat, dphit, dpt, neutronmomentum, dpTT, dummymu, dummybaryon);
+
+  //AnaFunctions::getCommonTKI(dummyA, targetZ, &neutrinofullp, muonfullp, baryonfullp, dalphat, dphit, dpt, neutronmomentum, dpTT, dummymu, dummybaryon);
+  AnaFunctions::getCommonTKI(dummyA, targetZ, &neutrinofullp, muonfullp, baryonfullp, pionfullp, dalphat, dphit, dpt, neutronmomentum, dpTT, dummymu, dummybaryon, dummyomega, dummymodelf, dummychi);
   
   /*
     protonTT = protonfullp->Vect().Dot(ztt);

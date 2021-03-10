@@ -98,10 +98,6 @@ namespace TreeIO
   double dalphat;
   double neutronmomentum;
   double dpTT;
-
-  double omegamup;
-  double modelf;
-  double chi;
   
  /*
    double muoncostheta;
@@ -280,10 +276,6 @@ TTree * GetTree(const analysis ana, const experiment exp)
   tout->Branch("dalphat",&dalphat);
   tout->Branch("neutronmomentum",&neutronmomentum);  
   tout->Branch("dpTT",&dpTT);
-
-  tout->Branch("omegamup",&omegamup);
-  tout->Branch("modelf",&modelf);
-  tout->Branch("chi",&chi);
 #endif
 
 #if __OPENCLR__

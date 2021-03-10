@@ -14,11 +14,7 @@ namespace ProcessUtils
   TLorentzVector * muonfullp= new TLorentzVector;
   TLorentzVector * protonfullp= new TLorentzVector;
   TLorentzVector * pionfullp= new TLorentzVector;
-  TLorentzVector * neutronFSfullp= new TLorentzVector;
-
-  //adding in a flag to check if neutrino energy is too high
-  //set flag to true if it is
-  bool nuEcutflag = false;
+  TLorentzVector * neutronFSfullp= new TLorentzVector;  
 
 void IniProcessUtils()
 {
@@ -353,9 +349,7 @@ void ProceedMINERvAGFS()
      ){
     totparcount+= MUONBIT;
     
-    //if(tmpmom> 1.5 && tmpmom< 10 && tmptheta<20){//mu+ or mu-
-    //remove all phase-space cuts for now
-    if(tmptheta < 10000){
+    if(tmpmom> 1.5 && tmpmom< 10 && tmptheta<20){//mu+ or mu-
       (*muonfullp)=(*lineFullMom);
       npar+= MUONBIT;
       }
@@ -372,9 +366,9 @@ void ProceedMINERvAGFS()
     AddABit(totparcount, PROTONBIT);
     
    
-    //if(tmpmom> 0.45 && tmpmom< 1.2 && tmptheta<70){
-    //remove all phase-space cuts
-    if(true){
+    if(
+       tmpmom> 0.45 && tmpmom< 1.2 && tmptheta<70
+       ){
       AddABit(npar, PROTONBIT);
       
       if(
@@ -395,6 +389,9 @@ void ProceedMINERvAGFS()
           ){
     AddABit(totparcount, PIONBIT);
 
+    //have to pick leading pion
+    //this bit picks out ALL pi-plus
+
     //pion cuts turned off for now
     //&& tmpmom> 0.2 && tmpmom< 4.0 
     //if(tmpEk > 0.075 && tmpEk < 0.4 
@@ -402,14 +399,6 @@ void ProceedMINERvAGFS()
     //   ){//pion
       (*pionfullp)=(*lineFullMom);
       AddABit(npar, PIONBIT);
-
-      //leading pion selection
-        if(
-         tmpmom>pionfullp->P()
-         ){
-           (*pionfullp)=(*lineFullMom);
-           CLR_KNsrc = CLR_lineKNsource;
-          }     
       // }
       //else if(!probl){
       // tmpcutcounter++;
@@ -424,14 +413,6 @@ void ProceedMINERvAGFS()
     AddABit(totparcount, BKGBIT);
     AddABit(npar, BKGBIT);
   }
-  /*
-  else if(!IsMuon() && !IsProton() && !IsNeutron() && !IsPion() && !IsPiZero() && !IsElectron() && !IsGamma() && !IsKaon() && !IsBKG()){ //this must be the neutrino
-    if(tmpmom > 10){ //fix the GiBUU flux problem
-      nuEcutflag = true;
-    }
-    else{nuEcutflag = false;}
-  }
-  */
   //cutcounter=tmpcutcounter;
 }
 
@@ -612,8 +593,7 @@ void ProceedMINERvAGFSPIZERO()
   else if(!IsNeutron()){
     if(lineRawID!= -9990001){//GiBUU has large antiproton
       //printf("GFSPIZERO strange background! linePID %d lineRawID %d run %d event %d\n", linePID, lineRawID, run, event); exit(1);
-      //printf("GFSPIZERO strange background! linePID %d lineRawID %d\n", linePID, lineRawID); exit(1);
-      if(run%100==0){printf("GFSPIZERO strange background! linePID %d lineRawID %d run %d event %d\n", linePID, lineRawID, run, event);}
+      printf("GFSPIZERO strange background! linePID %d lineRawID %d\n", linePID, lineRawID); exit(1);
     }
   }
   cutcounter=tmpcutcounter;
