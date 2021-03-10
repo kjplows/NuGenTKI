@@ -98,6 +98,7 @@ mkexe.sh getHist -I${NUGENTKI}/include
 #opt=${tag}GFS0PIa9t1nuCarbon;       nohup ./getHist $GFS0PIa9t1nuCarbon       ${opt} 1   > see${opt}.log &
 
 #GFS 2! anaid 1 is 0PI 2 is 1PI 4 is MPI 
+
 #opt=${tag}GFSa0t2nuCH;          nohup ./getHist $GFSa0t2nuCH          ${opt} 2   > see${opt}.log &
 #opt=${tag}GFSa0t4nuCH;          nohup ./getHist $GFSa0t4nuCH          ${opt} 4   > see${opt}.log &
 

@@ -50,6 +50,7 @@ do
     if [  $anaid == GFS0PIMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFS0PIMINERvAGiBUULE_CarbonOnly -o $anaid == GFS0PIMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFS0PIa9t1nuCarbon  -o $anaid == MINERvALEGiBUUGFS0PIa9t1nuCarbon ]
     then
         varray=${commonVar}" protonmomentum protontheta dpt dphit dalphat neutronmomentum"
+
     elif [ $anaid == GFSPIZEROMINERvAGENIE_v3OOB_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_v2DC_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIE_V2RG_LE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGiBUULE_CarbonOnly -o $anaid == GFSPIZEROMINERvAGENIEv2TJ_LE_CarbonOnly -o $anaid == MINERvAGENIEGFSPIZEROa7t4nuCarbon -o $anaid == MINERvALEGiBUUGFSPIZEROa7t4nuCarbon -o $anaid == MINERvAGENIEGFSa0t2nuCarbon -o $anaid == MINERvALEGiBUUGFSa0t2nuCarbon -o $anaid == MINERvALEGiBUUGFSa0t4nuCarbon -o $anaid==MINERvALEGiBUUGFSa0t4nuHydrogen -o $anaid == MINERvAMEBARGiBUUGFSa0t4nuCarbon -o $anaid == MINERvAMEBARGiBUUGFSa0t4nuHydrogen -o $anaid == MINERvAMEGiBUUGFSPIZEROa7t4nuCarbon -o $anaid == MINERvAMEGiBUUGFSPIZEROa7t4nuHydrogen ]
     then
         varray=${commonVar}" protonmomentum protontheta pionmomentum piontheta pionmomentumVStheta pionEk pionEkVStheta pionEkVSomegamup omegamupVStheta pionTmax pionTmaxVStheta baryonmomentum baryontheta baryonmass dpt dphit dalphat neutronmomentum dpTT chiVSdalphat "

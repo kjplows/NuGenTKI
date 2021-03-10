@@ -353,6 +353,7 @@ void ProceedMINERvAGFS()
      ){
     totparcount+= MUONBIT;
     
+
     //if(tmpmom> 1.5 && tmpmom< 10 && tmptheta<20){//mu+ or mu-
     //remove all phase-space cuts for now
     if(tmptheta < 10000){
@@ -410,6 +411,7 @@ void ProceedMINERvAGFS()
            (*pionfullp)=(*lineFullMom);
            CLR_KNsrc = CLR_lineKNsource;
           }     
+
       // }
       //else if(!probl){
       // tmpcutcounter++;

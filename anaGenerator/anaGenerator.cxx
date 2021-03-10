@@ -154,6 +154,7 @@ void GENIEReadChain(TChain * ch, TTree * tout, TH1F * &hCCrate, const int nEntry
           
 	  if(tmpid == 211 && ientry%100000==0){printf("GENIE pion Proceed?\n"); if(IniOrFinaltype==kFINAL){printf("kFINAL\n");}else{printf("NOT kFINAL!!!\n");}}
 	  if(GeneratorIO::GENIEProceed(IniOrFinaltype, RESdtype, ecode, tmpevent, tmpprod, tmpenu, tmppw, tmpmom1, tmpmom2, tmpmom3, tmptote, tmpid, tmpKNsrc)){
+
           //if(ecode.Contains("QES")){printf("test now do Main IniOrFinaltype %d\n", IniOrFinaltype); ch->Show(ientry);}
 	    if(tmpid == 211 && ientry%100000==0){printf("GENIE pion Proceeded\n");}
 	    AnaUtils::MainProceed();

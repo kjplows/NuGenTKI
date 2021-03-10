@@ -49,6 +49,13 @@ namespace HistIO
   TH2D * hchiVSdalphat = 0x0;
   //normalised histos here
 
+  //correlation plots: muon proton and pion theta vs momentum
+  //raw histos here
+  TH2D * hmuonmomentumVStheta = 0x0;
+  TH2D * hprotonmomentumVStheta = 0x0;
+  TH2D * hpionmomentumVStheta = 0x0;
+  //normalised histos here
+
 #if __OPENCLR__
   double RESmass, adlerPhi, lrsign, w2;
   double pseudoPhi, pseudosign, wpseudo2;

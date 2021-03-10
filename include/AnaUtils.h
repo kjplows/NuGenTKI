@@ -152,7 +152,7 @@ bool AnaUtils::IsGood()
   }
 
     if(anamode==GFSPIZERO || anamode==GFS0PI || anamode==GFS){
-      if(anamode==GFS && ProcessUtils::nuEcutflag){ //fix GiBUU flux? Hopefully
+      if(anamode==GFS){
 	return false;
       }
       //if(anamode==GFSPIZERO || anamode==GFS0PI){
